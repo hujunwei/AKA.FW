@@ -50,15 +50,15 @@ export default function App() {
                 href="/"
                 class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
               >
-                <svg
-                  class="bi me-2"
+                <div
+                  class="bi me-4"
                   width="40"
-                  height="32"
+                  height="40"
                   role="img"
                   aria-label="Bootstrap"
                 >
-                  
-                </svg>
+                <img src={require("./assets/fwlogo.png")} alt="FW" />
+                </div>
               </a>
 
               <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
