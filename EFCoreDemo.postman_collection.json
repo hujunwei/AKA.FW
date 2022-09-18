@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "0d1bf9fa-8d98-472c-ab2d-35f5f5cc4d9b",
+		"name": "EFCoreDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22936620"
+	},
+	"item": [
+		{
+			"name": "EFCoreDemo",
+			"item": [
+				{
+					"name": "Create Person",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 0,\n  \"firstName\": \"JohnX\",\n  \"lastName\": \"MillerX\",\n  \"age\": 52,\n  \"addresses\": [\n    \"2397 158TH AVE NE, REDMOND\",\n    \"4231235 158TH AVE NE, REDMOND\"\n  ],\n  \"emailAddresses\": [\n    \"johnxmillerx@outlook.com\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/people",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"people"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{efcoreidentitydemo_accesstoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localurl}}/api/people/104",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"104"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Person",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 4,\n    \"firstName\": \"Rick-Updated\",\n    \"lastName\": \"Lei-Updated\",\n    \"age\": 1024,\n    \"addresses\": [\n        \"Devoe Street, Conway, Tennessee, 44320-3022\",\n        \"Mars\"\n    ],\n    \"emailAddresses\": [\n        \"ricklei@outlook.com\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/people/4",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Person",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localurl}}/api/people/4",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EFCoreIdentityDemo",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"mappinguser\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/Roles",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"Roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"jasonhu@outlook.com\",\n  \"password\": \"123456\",\n  \"nickname\": \"Jason\",\n  \"email\": \"jasonhu@outlook.com\",\n  \"phoneNumber\" : \"9194911662\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/users",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User To Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/roles/addusertorole/2/2",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"addusertorole",
+								"2",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"efcoreidentitydemo_accesstoken\", responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"jasonhu@outlook.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localurl}}/api/login",
+							"host": [
+								"{{localurl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
