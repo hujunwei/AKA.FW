@@ -41,51 +41,106 @@ export default function App() {
   }
 
   return (
-    <div className="container">
-      <div className="row min-vh-100">
-        <div className="col d-flex flex-column justify-content-center align-items-center">
-          {!showingCreateNewPersonForm && !showingUpdatePersonForm && (
-            <div>
-              <div className="mt-5" class="btn-group" role="group">
-                <button
-                  onClick={getPeople}
-                  className="btn btn-dark btn-secondary btn-lg"
-                >
-                  Get from server
+    <div>
+      {!showingCreateNewPersonForm && !showingUpdatePersonForm && (
+        <header class="p-3 text-bg-dark">
+          <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+              {/* <a
+                    href="/"
+                    class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+                  >
+                    <svg
+                      class="bi me-2"
+                      width="40"
+                      height="32"
+                      role="img"
+                      aria-label="Bootstrap"
+                    >
+                      <use xlink:href="#bootstrap" />
+                    </svg>
+                  </a> */}
+
+              <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                  <a
+                    href="/"
+                    onClick={getPeople}
+                    class="nav-link px-2 text-secondary"
+                  >
+                    Get from server
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/"
+                    onClick={() => setShowingCreateNewPersonForm(true)}
+                    class="nav-link px-2 text-white"
+                  >
+                    Create new person
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/"
+                    onClick={() => setPeople([])}
+                    class="nav-link px-2 text-white"
+                  >
+                    Empty list
+                  </a>
+                </li>
+                <li>
+                  <a href="/" class="nav-link px-2 text-white">
+                    FAQs
+                  </a>
+                </li>
+                <li>
+                  <a href="/" class="nav-link px-2 text-white">
+                    About
+                  </a>
+                </li>
+              </ul>
+
+              <form
+                class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+                role="search"
+              >
+                <input
+                  type="search"
+                  class="form-control form-control-dark text-bg-dark"
+                  placeholder="Search..."
+                  aria-label="Search"
+                />
+              </form>
+
+              <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">
+                  Login
                 </button>
-                <button
-                  onClick={() => setShowingCreateNewPersonForm(true)}
-                  className="btn btn-dark btn-secondary btn-lg"
-                >
-                  Create new person
-                </button>
-                <button
-                  onClick={() => setPeople([])}
-                  className="btn btn-dark btn-secondary btn-lg"
-                >
-                  Empty list
+                <button type="button" class="btn btn-warning">
+                  Sign-up
                 </button>
               </div>
             </div>
-          )}
+          </div>
+        </header>
+      )}
 
-          {people.length > 0 &&
-            !showingCreateNewPersonForm &&
-            !showingUpdatePersonForm &&
-            renderPersonsTable()}
+      {people.length > 0 &&
+        !showingCreateNewPersonForm &&
+        !showingUpdatePersonForm &&
+        renderPersonsTable()}
 
-          {showingCreateNewPersonForm && (
-            <PersonCreateForm onPersonCreated={onPersonCreated} />
-          )}
+      {showingCreateNewPersonForm && (
+        <PersonCreateForm onPersonCreated={onPersonCreated} />
+      )}
 
-          {!!showingUpdatePersonForm && (
-            <PersonUpdateForm
-              person={showingUpdatePersonForm}
-              onPersonUpdated={onPersonUpdated}
-            />
-          )}
-        </div>
-      </div>
+      {!!showingUpdatePersonForm && (
+        <PersonUpdateForm
+          person={showingUpdatePersonForm}
+          onPersonUpdated={onPersonUpdated}
+        />
+      )}
     </div>
   );
 
@@ -144,11 +199,11 @@ export default function App() {
     setShowingCreateNewPersonForm(false);
 
     if (!!createdPerson) {
-       alert(
-         `Person: ${createdPerson.firstName} ${createdPerson.lastName} created`
-       );
+      alert(
+        `Person: ${createdPerson.firstName} ${createdPerson.lastName} created`
+      );
 
-       getPeople();
+      getPeople();
     }
   }
 
@@ -161,7 +216,10 @@ export default function App() {
 
     let peopleCopy = [...people];
 
-    const index = peopleCopy.findIndex((peopleCopyPerson, currentIndex) => peopleCopyPerson.id === updatedPerson.id);
+    const index = peopleCopy.findIndex(
+      (peopleCopyPerson, currentIndex) =>
+        peopleCopyPerson.id === updatedPerson.id
+    );
 
     if (index !== -1) {
       peopleCopy[index] = updatedPerson;
