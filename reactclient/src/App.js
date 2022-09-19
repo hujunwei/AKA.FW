@@ -13,7 +13,7 @@ import useToken from "./utilities/UseToken";
 export default function App() {
   const { token, setToken } = useToken();
 
-  if (!token) {
+  if (true && !token) {
     return <Login setToken={setToken} />;
   }
 
