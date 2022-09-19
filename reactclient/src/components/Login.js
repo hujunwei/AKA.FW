@@ -80,7 +80,6 @@ export default function Login({ setToken }) {
               </div>
 
               <div class="d-flex justify-content-between align-items-center">
-                {/* <!-- Checkbox --> */}
                 <div class="form-check mb-0">
                   <input
                     class="form-check-input me-2"
@@ -120,13 +119,10 @@ export default function Login({ setToken }) {
         </div>
       </div>
       <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        {/* <!-- Copyright --> */}
         <div class="text-white mb-3 mb-md-0">
           Copyright © 2022. All rights reserved.
         </div>
-        {/* <!-- Copyright --> */}
 
-        {/* <!-- Right --> */}
         <div>
           <a href="#!" class="text-white me-4">
             <i class="fab fa-facebook-f"></i>
@@ -141,7 +137,6 @@ export default function Login({ setToken }) {
             <i class="fab fa-linkedin-in"></i>
           </a>
         </div>
-        {/* <!-- Right --> */}
       </div>
     </section>
   );
