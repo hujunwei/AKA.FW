@@ -46,6 +46,10 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
+import useToken from "utilities/UseToken";
+
+import SignIn from "./layouts/authentication/sign-in/index";
+
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -127,6 +131,12 @@ export default function App() {
       </Icon>
     </MDBox>
   );
+
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return <SignIn setToken={setToken} />;
+  }
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>

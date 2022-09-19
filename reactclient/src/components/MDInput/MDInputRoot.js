@@ -17,6 +17,12 @@ Coded by www.creative-tim.com
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
+// const styled = (Component) => {
+//   return (styleGenerator) => ({ownerState, ...rest}) => {
+//     <Component style={...styleGenerator(ownerState)} {...rest} />
+//   }
+// }
+
 export default styled(TextField)(({ theme, ownerState }) => {
   const { palette, functions } = theme;
   const { error, success, disabled } = ownerState;
