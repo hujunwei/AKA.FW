@@ -6,7 +6,8 @@ const ENDPOINTS = {
     GET_PERSON_BY_ID: "api/people",
     CREATE_PERSON: "api/people",
     UPDATE_PERSON: "api/people",
-    DELETE_PERSON: "api/people"
+    DELETE_PERSON: "api/people",
+    LOGIN: "api/login"
 }
 
 const development = {
@@ -15,6 +16,7 @@ const development = {
   API_URL_CREATE_PERSON: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.CREATE_PERSON}`,
   API_URL_UPDATE_PERSON: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.UPDATE_PERSON}`,
   API_URL_DELETE_PERSON: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.DELETE_PERSON}`,
+  API_URL_LOGIN: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.LOGIN}`,
 };
 
 const production = {
@@ -23,6 +25,7 @@ const production = {
   API_URL_CREATE_PERSON: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.CREATE_PERSON}`,
   API_URL_UPDATE_PERSON: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.UPDATE_PERSON}`,
   API_URL_DELETE_PERSON: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.DELETE_PERSON}`,
+  API_URL_LOGIN: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.LOGIN}`,
 };
 
 const Constants = process.env.NODE_ENV === "development" ? development : production;

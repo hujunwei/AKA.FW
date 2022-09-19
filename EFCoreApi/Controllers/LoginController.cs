@@ -29,7 +29,7 @@ namespace EFCoreApi.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Login(LoginRequestPayload loginRequestPayload)
+        public async Task<LoginResponse> Login(LoginRequestPayload loginRequestPayload)
         {
             var user = await _userManager.FindByNameAsync(loginRequestPayload.UserName);
             Exception<KeyNotFoundException>.ThrowOn(() => user == null, $"User: {loginRequestPayload.UserName} does not exist.");
@@ -48,7 +48,13 @@ namespace EFCoreApi.Controllers
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             
-            return  _jwtTokenIssuer.IssueJwtToken(claims);
+            var jwtTokenForUser =  _jwtTokenIssuer.IssueJwtToken(claims);
+
+            return new LoginResponse
+            {
+                UserInfo = _mapper.Map<UserDto>(user),
+                Token = jwtTokenForUser
+            };
         }
     }
 }
