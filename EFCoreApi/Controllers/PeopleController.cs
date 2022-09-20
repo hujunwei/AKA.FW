@@ -9,7 +9,7 @@ namespace EFCoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class PeopleController : ControllerBase
     {
         private readonly IPeopleManager _peopleManager;
