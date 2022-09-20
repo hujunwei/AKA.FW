@@ -23,9 +23,15 @@ import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import TimelineItem from "examples/Timeline/TimelineItem";
+import { Navigate } from 'react-router-dom';
+
+import useToken from "utilities/UseToken";
 
 function OrdersOverview() {
+  const { token } = useToken;
+
   return (
+    !token ? <Navigate replace to="/authentication/sign-in" /> :
     <Card sx={{ height: "100%" }}>
       <MDBox pt={3} px={3}>
         <MDTypography variant="h6" fontWeight="medium">

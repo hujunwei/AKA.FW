@@ -33,6 +33,7 @@ import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import { Navigate } from "react-router-dom";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
@@ -51,8 +52,13 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
+import useToken from "utilities/UseToken";
+
 function Overview() {
+  const { token } = useToken();
+
   return (
+    !token ? <Navigate replace to="/authentication/sign-in" /> :
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />

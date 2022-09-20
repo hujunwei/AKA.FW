@@ -34,14 +34,15 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-import Constants from "utilities/Constants";
-import PropTypes from "prop-types";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+
+import useToken from "utilities/UseToken";
+import Constants from "utilities/Constants";
 
 async function loginUser(credentials) {
   return fetch(Constants.API_URL_LOGIN, {
@@ -53,12 +54,13 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-function Basic({ setToken }) {
+function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const { setToken } = useToken();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,10 +109,10 @@ function Basic({ setToken }) {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth onChange={(e) => setUserName(e.target.value)} />
+              <MDInput type="email" label="Email" onChange={(e) => setUserName(e.target.value)} fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password"  fullWidth onChange={(e) => setPassword(e.target.value)} />
+              <MDInput type="password" label="Password" onChange={(e) => setPassword(e.target.value)} fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -152,7 +154,3 @@ function Basic({ setToken }) {
 }
 
 export default Basic;
-
-Basic.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};

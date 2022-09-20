@@ -26,16 +26,21 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
+import { Navigate } from "react-router-dom";
 
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
+import useToken from "utilities/UseToken";
+
 function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { token } = useToken();
 
   return (
+    !token ? <Navigate replace to="/authentication/sign-in" /> :
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
