@@ -28,7 +28,7 @@ import { Navigate } from 'react-router-dom';
 import useToken from "utilities/UseToken";
 
 function OrdersOverview() {
-  const { token } = useToken;
+  const { token } = useToken();
 
   return (
     !token ? <Navigate replace to="/authentication/sign-in" /> :
