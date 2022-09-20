@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -58,6 +58,7 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const { setToken } = useToken();
@@ -69,6 +70,8 @@ function Basic() {
       password,
     });
     setToken(token);
+
+    navigate("/dashboard");
   };
 
   return (
