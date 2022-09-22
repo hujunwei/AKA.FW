@@ -34,10 +34,15 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 
+import useToken from "utilities/UseToken";
+import { Navigate } from "react-router-dom";
+
 function Dashboard() {
   const { sales } = reportsLineChartData;
+  const { token } = useToken();
 
   return (
+    !token ? <Navigate replace to="/authentication/sign-in" /> :
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
