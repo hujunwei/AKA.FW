@@ -2,14 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace EFDataAccess {
-    public class EFCoreDemoContext : DbContext {
-        public EFCoreDemoContext() { }
+    public class EFCoreContext : DbContext {
+        public EFCoreContext() { }
 
-        public EFCoreDemoContext(DbContextOptions<EFCoreDemoContext> options) : base(options) {}
-
-        public DbSet<Person> People { get; set; } = default!;
-        public DbSet<Address> Addresses { get; set; } = default!;
-        public DbSet<Email> EmailAddresses { get; set; } = default!;
+        public EFCoreContext(DbContextOptions<EFCoreContext> options) : base(options) {}
 
         public DbSet<RouteMapping> RouteMappings { get; set; } = default!;
 

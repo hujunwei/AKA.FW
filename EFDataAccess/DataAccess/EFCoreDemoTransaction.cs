@@ -10,11 +10,11 @@ namespace EFDataAccess.DataAccess;
 /// </summary>
 public class EFCoreDemoTransaction : IDisposable
 {
-    internal EFCoreDemoContext Context { get; }
+    internal EFCoreContext Context { get; }
 
     private readonly IDbContextTransaction _transaction = default!;
 
-    public EFCoreDemoTransaction(EFCoreDemoContext context, EFCoreDemoTransaction? existingTransaction = null)
+    public EFCoreDemoTransaction(EFCoreContext context, EFCoreDemoTransaction? existingTransaction = null)
     {
         if (existingTransaction == null)
         {

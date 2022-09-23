@@ -25,7 +25,7 @@ class Program
         builder.Services.AddControllers();
 
         // EFCore
-        builder.Services.AddDbContext<EFCoreDemoContext>(options =>
+        builder.Services.AddDbContext<EFCoreContext>(options =>
         {
             options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
         });
