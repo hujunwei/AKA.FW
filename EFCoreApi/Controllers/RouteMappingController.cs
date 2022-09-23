@@ -18,21 +18,28 @@ namespace EFCoreApi.Controllers
             _routeMappingsManager = routeMappingManager;
         }
 
-        // GET: api/RouteMappings/official
+        // GET: api/routeMappings/official
         [HttpGet]
         public async Task<IEnumerable<RouteMappingDto>> ListOfficialRouteMappings()
         {
             return await _routeMappingsManager.ListOfficialRouteMappings();
         }
+        
+        // GET: api/routeMappings/my
+        [HttpGet]
+        public async Task<IEnumerable<RouteMappingDto>> ListRouteMappingsForUser()
+        {
+            return await _routeMappingsManager.ListRouteMappingsForUser();
+        }
 
-        // GET: api/RouteMappings/5
+        // GET: api/routeMappings/5
         [HttpGet("{id}", Name = "Get")]
         public async Task<RouteMappingDto> GetRouteMappingByIdForUser(string id)
         {
             return await _routeMappingsManager.GetRouteMappingByIdForUser(new Guid(id));
         }
 
-        // POST: api/RouteMappings
+        // POST: api/routeMappings
         [HttpPost]
         public async Task<RouteMappingDto> Post([FromBody] RouteMappingDto routeMappingDto)
         {
@@ -41,7 +48,7 @@ namespace EFCoreApi.Controllers
             return await _routeMappingsManager.AddRouteMapping(routeMappingDto);
         }
 
-        // PATCH: api/RouteMappings/5
+        // PATCH: api/routeMappings/5
         [HttpPatch("{id}")]
         public async Task<RouteMappingDto> Update(string id, [FromBody] RouteMappingDto routeMappingDto)
         {
@@ -51,7 +58,7 @@ namespace EFCoreApi.Controllers
             return await _routeMappingsManager.UpdateRouteMapping(routeMappingDto); 
         }
 
-        // DELETE: api/RouteMappings/5
+        // DELETE: api/routeMappings/5
         [HttpDelete("{id}")]
         public async Task Delete(string id)
         {
