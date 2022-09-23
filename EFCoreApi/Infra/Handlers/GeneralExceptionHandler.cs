@@ -28,7 +28,7 @@ public static class GeneralExceptionHandler
         { typeof(OperationCanceledException), HttpStatusCode.BadRequest },
         { typeof(KeyNotFoundException), HttpStatusCode.BadRequest },
         { typeof(TimeoutException), HttpStatusCode.RequestTimeout },
-        //{ typeof(EntityNotFoundException<>), HttpStatusCode.NotFound },
+        { typeof(EntityNotFoundException), HttpStatusCode.NotFound },
         { typeof(EntityChangedException), HttpStatusCode.PreconditionFailed },
         { typeof(EntityAlreadyExistsException), HttpStatusCode.Conflict },
         { typeof(EntityUpdateException), HttpStatusCode.InternalServerError }, // dont really know what happened so make it 500 for now

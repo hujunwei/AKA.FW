@@ -14,7 +14,7 @@ public class EntityAccessor<TEntity> where TEntity : class, new()
 {
     // ReSharper disable once MemberCanBePrivate.Global
     // May used by it descendants
-    protected EFCoreDemoTransaction Transaction { get; private set; } = default!;
+    protected EFCoreTransaction Transaction { get; private set; } = default!;
 
     // ReSharper disable once MemberCanBePrivate.Global
     // May used by it descendants
@@ -25,7 +25,7 @@ public class EntityAccessor<TEntity> where TEntity : class, new()
         this.Context = context;
     }
 
-    protected EntityAccessor(EFCoreContext context, EFCoreDemoTransaction transaction)
+    protected EntityAccessor(EFCoreContext context, EFCoreTransaction transaction)
     {
         Context = context;
         SetTransaction(transaction);
@@ -33,7 +33,7 @@ public class EntityAccessor<TEntity> where TEntity : class, new()
 
     // ReSharper disable once MemberCanBePrivate.Global
     // May used by it descendants
-    internal void SetTransaction(EFCoreDemoTransaction transaction)
+    internal void SetTransaction(EFCoreTransaction transaction)
     {
         Transaction = transaction;
         Context = Transaction?.Context ?? new EFCoreContext();

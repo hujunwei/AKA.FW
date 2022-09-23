@@ -8,13 +8,13 @@ namespace EFDataAccess.DataAccess;
 /// If there is an existing transaction, use existing.
 /// Else use new.
 /// </summary>
-public class EFCoreDemoTransaction : IDisposable
+public class EFCoreTransaction : IDisposable
 {
     internal EFCoreContext Context { get; }
 
     private readonly IDbContextTransaction _transaction = default!;
 
-    public EFCoreDemoTransaction(EFCoreContext context, EFCoreDemoTransaction? existingTransaction = null)
+    public EFCoreTransaction(EFCoreContext context, EFCoreTransaction? existingTransaction = null)
     {
         if (existingTransaction == null)
         {
