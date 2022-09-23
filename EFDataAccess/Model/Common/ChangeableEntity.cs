@@ -1,13 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace EFDataAccess.Model.Common;
 
 public class ChangeableEntity<TEntityId> : IRowVersionedEntity
 {
     public TEntityId Id { get; set; } = default!;
-
+    
     public string CreatedBy { get; set; } = default!;
 
     public DateTime CreatedAt { get; set; } = default!;
-
+    
     public string UpdatedBy { get; set; } = default!;
 
     public DateTime UpdatedAt { get; set; } = default!;

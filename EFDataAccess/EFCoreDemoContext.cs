@@ -11,6 +11,8 @@ namespace EFDataAccess {
         public DbSet<Address> Addresses { get; set; } = default!;
         public DbSet<Email> EmailAddresses { get; set; } = default!;
 
+        public DbSet<RouteMapping> RouteMappings { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
