@@ -31,7 +31,7 @@ class Program
         });
 
         // FluentValidation
-        builder.Services.AddValidatorsFromAssemblyContaining<PersonDtoValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<RouteMappingDtoValidator>();
         
         // AutoMapper
         builder.Services.AddAutoMapper(typeof(Program));

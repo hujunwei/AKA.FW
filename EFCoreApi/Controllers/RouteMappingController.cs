@@ -53,6 +53,7 @@ namespace EFCoreApi.Controllers
         public async Task<RouteMappingDto> Update(string id, [FromBody] RouteMappingDto routeMappingDto)
         {
             Exception<ArgumentNullException>.ThrowOn(() => routeMappingDto == null, $"RouteMapping to be updated cannot be null.");
+            
             routeMappingDto.Id = id;
 
             return await _routeMappingsManager.UpdateRouteMapping(routeMappingDto); 
