@@ -10,9 +10,9 @@ public class RouteMapping : ChangeableEntity<Guid>
     
     public string TargetUrl { get; set; } = default!;
 
-    public bool IsActive { get; init; }
+    public bool IsActive { get; set; }
 
-    public bool IsOfficial { get; init; }
+    public bool IsOfficial { get; set; }
 
-    public string ClientData { get; set; } = default!;
+    public string? ClientData { get; set; } = default!;
 }

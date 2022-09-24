@@ -2,7 +2,7 @@ namespace EFCoreApi.DTOs;
 
 public class UserDto
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string UserName { get; set; } = default!;
     public string Password { get; set; } = default!;
     public string NickName { get; set; } = default!;

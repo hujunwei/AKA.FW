@@ -54,7 +54,7 @@ namespace EFCoreApi.Controllers
         {
             Exception<ArgumentNullException>.ThrowOn(() => routeMappingDto == null, $"RouteMapping to be updated cannot be null.");
             
-            routeMappingDto.Id = id;
+            routeMappingDto.Id = new Guid(id);
 
             return await _routeMappingsManager.UpdateRouteMapping(routeMappingDto); 
         }

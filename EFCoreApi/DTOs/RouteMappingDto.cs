@@ -4,7 +4,7 @@ namespace EFCoreApi.DTOs;
 
 public class RouteMappingDto
 {
-    public string Id { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
     public string Name { get; init; } = default!;
     public string SourceAlias { get; init; } = default!;
     public string TargetUrl { get; init; } = default!;

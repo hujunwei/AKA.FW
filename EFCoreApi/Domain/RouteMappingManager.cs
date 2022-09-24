@@ -111,6 +111,22 @@ public class RouteMappingManager : IRouteMappingManager
     public async Task<RouteMappingDto> UpdateRouteMapping(RouteMappingDto routeMappingDto)
     {
         await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
+        
+        var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
+            mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
+            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+
+        var existOfficialMappingsWithSameTargetUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
+            mapping.IsOfficial &&
+            mapping.TargetUrl.Equals(routeMappingDto.TargetUrl, StringComparison.OrdinalIgnoreCase));
+        Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameTargetUrl.Any(), 
+            "Cannot update the short alias link because there is an existing official alias link to the TargetUrl you provided.");
+        
+        var existOfficialMappingsWithSameAliasUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
+            mapping.IsOfficial &&
+            mapping.SourceAlias.Equals(routeMappingDto.SourceAlias, StringComparison.OrdinalIgnoreCase));
+        Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameAliasUrl.Any(), 
+            "Cannot update the short alias link because there is an existing official alias link to the SourceAlias you provided.");
 
         var currentUser = await getCurrentUser();
         var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
@@ -118,11 +134,11 @@ public class RouteMappingManager : IRouteMappingManager
                 routeMappingDto.IsOfficial && 
                 !currentUserRoles.Any(role => role.Equals("admin", StringComparison.OrdinalIgnoreCase)), 
             "Cannot update official alias link as current sign-in user is not admin.");
-        
-        var existingRouteMapping = await _routeMappingAccessor.GetById(new Guid(routeMappingDto.Id));
+
+        var existingRouteMapping = await _routeMappingAccessor.GetById(routeMappingDto.Id);
         Exception<InvalidOperationException>.ThrowOn(() => existingRouteMapping == null,
             "Cannot update RouteMapping because unable find existing RouteMapping entry in database.");
-
+        
         existingRouteMapping!.Id = existingRouteMapping.Id;
         existingRouteMapping.Name = string.IsNullOrWhiteSpace(routeMappingDto.Name)
             ? existingRouteMapping.Name
@@ -135,6 +151,7 @@ public class RouteMappingManager : IRouteMappingManager
             string.IsNullOrWhiteSpace(routeMappingDto.TargetUrl)
                 ? existingRouteMapping.TargetUrl
                 : routeMappingDto.TargetUrl;
+        existingRouteMapping.IsActive = routeMappingDto.IsActive;
         existingRouteMapping.UpdatedAt = DateTime.UtcNow;
         existingRouteMapping.UpdatedBy = currentUser.Id.ToString();
 
