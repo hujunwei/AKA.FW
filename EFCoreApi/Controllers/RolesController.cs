@@ -12,28 +12,12 @@ namespace EFCoreApi.Controllers
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
-        private readonly ILogger<RolesController> _logger;
 
-        public RolesController(RoleManager<Role> roleManager, UserManager<User> userManager, ILogger<RolesController> logger)
+        public RolesController(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            _logger = logger;
         }
-        //
-        // // GET: api/Roles
-        // [HttpGet]
-        // public IEnumerable<string> Get()
-        // {
-        //     return new string[] { "value1", "value2" };
-        // }
-        //
-        // // GET: api/Roles/5
-        // [HttpGet("{id}", Name = "Get")]
-        // public string Get(int id)
-        // {
-        //     return "value";
-        // }
 
         // POST: api/Roles
         [HttpPost]
@@ -68,17 +52,5 @@ namespace EFCoreApi.Controllers
 
             return res;
         }
-
-        // // PUT: api/Roles/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody] string value)
-        // {
-        // }
-        //
-        // // DELETE: api/Roles/5
-        // [HttpDelete("{id}")]
-        // public void Delete(int id)
-        // {
-        // }
     }
 }

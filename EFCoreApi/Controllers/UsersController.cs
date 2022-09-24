@@ -13,38 +13,24 @@ namespace EFCoreApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
-        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(UserManager<User> userManager, IMapper mapper, ILogger<UsersController> logger)
+        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, IMapper mapper)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _mapper = mapper;
-            _logger = logger;
         }
 
-        // // GET: api/Users
-        // [HttpGet]
-        // public IEnumerable<string> Get()
-        // {
-        //     return new string[] { "value1", "value2" };
-        // }
-        //
-        // // GET: api/Users/5
-        // [HttpGet("{id}", Name = "Get")]
-        // public string Get(int id)
-        // {
-        //     return "value";
-        // }
-        
         // POST: api/Users
+        // This will create a User and assign Role.User to him/her.
         [HttpPost]
         public async Task<UserDto> CreateUser([FromBody] UserDto userDto)
         {
             // TODO: User validator, e.g UserName should be email.
             Exception<ArgumentNullException>.ThrowOn(() => userDto == null, "User cannot be null.");
             
-            // TODO: Biz logic to manager
             var existingUser = await _userManager.FindByNameAsync(userDto.UserName);
             Exception<EntityAlreadyExistsException>.ThrowOn(() => existingUser != null, $"User with name: {userDto.UserName} already exists.");
 
@@ -60,20 +46,10 @@ namespace EFCoreApi.Controllers
             Exception<EntityUpdateException>.ThrowOn(() => res is not { Succeeded: true }, $"Cannot create userDto. Errors {res.Errors.ToJson()}");
 
             var createdUser = await _userManager.FindByNameAsync(userDto.UserName);
+            var role = await _roleManager.FindByNameAsync("user");
+            await _userManager.AddToRoleAsync(createdUser, role.Name);
 
             return _mapper.Map<UserDto>(createdUser);
         }
-        
-        // // PUT: api/Users/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody] string value)
-        // {
-        // }
-        //
-        // // DELETE: api/Users/5
-        // [HttpDelete("{id}")]
-        // public void Delete(int id)
-        // {
-        // }
     }
 }
