@@ -57,7 +57,7 @@ function Footer({ light }) {
               </Icon>
             </MDBox>
             by
-            <Link href="https://wiki.freewheel.tv/display/MRMUI/All+UI+Home" target="_blank">
+            <Link href="https://wiki.freewheel.tv/" target="_blank">
               <MDTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
                 &nbsp;One Strata, Biz-UI @ FREEWHEEL&nbsp;
               </MDTypography>

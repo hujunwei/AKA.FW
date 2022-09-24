@@ -24,7 +24,6 @@ import MDBox from "components/MDBox";
 // import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
@@ -33,15 +32,6 @@ import Footer from "layouts/authentication/components/Footer";
 function CoverLayout({ coverHeight, image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/material-dashboard-react",
-          label: "free download",
-        }}
-        transparent
-        light
-      />
       <MDBox
         width="calc(100% - 2rem)"
         minHeight={coverHeight}
