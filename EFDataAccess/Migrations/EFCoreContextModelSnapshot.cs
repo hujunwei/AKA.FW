@@ -52,7 +52,7 @@ namespace EFDataAccess.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ShortUrl")
+                    b.Property<string>("SourceAlias")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");

@@ -6,7 +6,7 @@ public class RouteMappingDto
 {
     public string Id { get; set; } = default!;
     public string Name { get; init; } = default!;
-    public string ShortUrl { get; init; } = default!;
+    public string SourceAlias { get; init; } = default!;
     public string TargetUrl { get; init; } = default!;
 
     public bool IsActive { get; init; }
@@ -35,7 +35,7 @@ public class RouteMappingDtoValidator : AbstractValidator<RouteMappingDto>
 
     public RouteMappingDtoValidator()
     {
-        RuleFor(p => p.ShortUrl).Must(url => !s_predefinedUrls.Any(purl => url.Contains(purl, StringComparison.OrdinalIgnoreCase)));
+        RuleFor(p => p.SourceAlias).Must(url => !s_predefinedUrls.Any(purl => url.Contains(purl, StringComparison.OrdinalIgnoreCase)));
         RuleFor(p => p.TargetUrl).Must(url => !string.IsNullOrWhiteSpace(url));
     }
 }
