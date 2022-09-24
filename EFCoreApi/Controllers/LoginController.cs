@@ -16,14 +16,12 @@ namespace EFCoreApi.Controllers
     public class LoginController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
         private readonly IJwtTokenIssuer _jwtTokenIssuer;
 
-        public LoginController(UserManager<User> userManager, RoleManager<Role> roleManager, IMapper mapper, IJwtTokenIssuer jwtTokenIssuer)
+        public LoginController(UserManager<User> userManager, IMapper mapper, IJwtTokenIssuer jwtTokenIssuer)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _mapper = mapper;
             _jwtTokenIssuer = jwtTokenIssuer;
         }
