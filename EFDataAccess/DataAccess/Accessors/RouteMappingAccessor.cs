@@ -6,7 +6,7 @@ namespace EFDataAccess.DataAccess.Accessors;
 
 public class RouteMappingAccessor : EntityAccessor<RouteMapping>, IRouteMappingAccessor
 {
-    protected RouteMappingAccessor(EFCoreContext context) : base(context)
+    public RouteMappingAccessor(EFCoreContext context) : base(context)
     {
     }
 

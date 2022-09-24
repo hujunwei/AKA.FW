@@ -19,14 +19,14 @@ namespace EFCoreApi.Controllers
         }
 
         // GET: api/routeMappings/official
-        [HttpGet]
+        [HttpGet("official")]
         public async Task<IEnumerable<RouteMappingDto>> ListOfficialRouteMappings()
         {
             return await _routeMappingsManager.ListOfficialRouteMappings();
         }
         
         // GET: api/routeMappings/my
-        [HttpGet]
+        [HttpGet("my")]
         public async Task<IEnumerable<RouteMappingDto>> ListRouteMappingsForUser()
         {
             return await _routeMappingsManager.ListRouteMappingsForUser();

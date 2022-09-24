@@ -35,7 +35,7 @@ public class RouteMappingManager : IRouteMappingManager
         Exception<EntityNotFoundException>.ThrowOn(() => routeMapping == null, $"RouteMapping with id:{id} not found.");
         
         var currentUser = await getCurrentUser();
-        Exception<InvalidOperationException>.ThrowOn(() => currentUser.Id.ToString() != routeMapping.CreatedBy, $"RouteMapping with id:{id} does not belongs to current sign-in user.");    
+        Exception<InvalidOperationException>.ThrowOn(() => currentUser.Id.ToString() != routeMapping?.CreatedBy, $"RouteMapping with id:{id} does not belongs to current sign-in user.");    
         
         return _mapper.Map<RouteMappingDto>(routeMapping);
     }
@@ -60,20 +60,35 @@ public class RouteMappingManager : IRouteMappingManager
     public async Task<RouteMappingDto> AddRouteMapping(RouteMappingDto routeMappingDto)
     {
         await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
-        
-        // TODO: Add index because we are querying by targetUrl?
-        var existMappingsWithSameTargetUrl = await _routeMappingAccessor.List(mapping =>
+
+        // TODO: Add index because we are querying by targetUrl & alias
+        var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
+            mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
+            mapping.ShortUrl.ToLower().Equals(routeMappingDto.ShortUrl.ToLower()));
+
+        var existOfficialMappingsWithSameTargetUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
+            mapping.IsOfficial &&
             mapping.TargetUrl.Equals(routeMappingDto.TargetUrl, StringComparison.OrdinalIgnoreCase));
+        Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameTargetUrl.Any(), 
+            "Cannot create the short alias link because there is an existing official alias link to the TargetUrl you provided.");
         
-        var existOfficialMappingsWithSameTargetUrl = existMappingsWithSameTargetUrl.Where(mapping => mapping.IsOfficial);
-        Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameTargetUrl.Any(), "Cannot create the short alias link because there is an existing official alias link.");
+        var existOfficialMappingsWithSameAliasUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
+            mapping.IsOfficial &&
+            mapping.ShortUrl.Equals(routeMappingDto.ShortUrl, StringComparison.OrdinalIgnoreCase));
+        Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameAliasUrl.Any(), 
+            "Cannot create the short alias link because there is an existing official alias link to the ShortUrl you provided.");
         
         var currentUser = await getCurrentUser();
-        
-        var existMappingsWithSameTargetUrlForUser = existMappingsWithSameTargetUrl.Where(mapping => 
-            mapping.ShortUrl.Equals(routeMappingDto.ShortUrl, StringComparison.OrdinalIgnoreCase) &&
+        var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+        Exception<InvalidOperationException>.ThrowOn(() => 
+            routeMappingDto.IsOfficial && 
+            !currentUserRoles.Any(role => role.Equals("admin", StringComparison.OrdinalIgnoreCase)), 
+            "Cannot create official alias link as current sign-in user is not admin.");
+
+        var existMappingsForUser = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
+            (mapping.TargetUrl.Equals(routeMappingDto.TargetUrl, StringComparison.OrdinalIgnoreCase) || mapping.ShortUrl.Equals(routeMappingDto.ShortUrl, StringComparison.OrdinalIgnoreCase)) &&
             mapping.CreatedBy.Equals(currentUser.Id.ToString(), StringComparison.OrdinalIgnoreCase));
-        Exception<InvalidOperationException>.ThrowOn(() => existMappingsWithSameTargetUrlForUser.Any(), "Alias link already exists on your list.");
+        Exception<InvalidOperationException>.ThrowOn(() => existMappingsForUser.Any(), "Alias link already exists on your list.");
 
         var RouteMapping = new RouteMapping
         {
@@ -98,6 +113,11 @@ public class RouteMappingManager : IRouteMappingManager
         await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
 
         var currentUser = await getCurrentUser();
+        var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+        Exception<InvalidOperationException>.ThrowOn(() => 
+                routeMappingDto.IsOfficial && 
+                !currentUserRoles.Any(role => role.Equals("admin", StringComparison.OrdinalIgnoreCase)), 
+            "Cannot update official alias link as current sign-in user is not admin.");
         
         var existingRouteMapping = await _routeMappingAccessor.GetById(new Guid(routeMappingDto.Id));
         Exception<InvalidOperationException>.ThrowOn(() => existingRouteMapping == null,
@@ -126,9 +146,15 @@ public class RouteMappingManager : IRouteMappingManager
     public async Task DeleteRouteMapping(Guid id)
     {
         var existing = await _routeMappingAccessor.GetById(id);
-
         Exception<InvalidOperationException>.ThrowOn(() => existing == null,
             $"Cannot delete RouteMapping with Id:{id} because the entity not found");
+        
+        var currentUser = await getCurrentUser();
+        var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+        Exception<InvalidOperationException>.ThrowOn(() => 
+                existing?.IsOfficial == true && 
+                !currentUserRoles.Any(role => role.Equals("admin", StringComparison.OrdinalIgnoreCase)), 
+            "Cannot delete official alias link as current sign-in user is not admin.");
 
         await _routeMappingAccessor.Delete(existing!);
     }
