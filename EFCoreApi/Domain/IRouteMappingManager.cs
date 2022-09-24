@@ -10,4 +10,5 @@ public interface IRouteMappingManager
     Task<RouteMappingDto> AddRouteMapping(RouteMappingDto routeMappingDto);
     Task<RouteMappingDto> UpdateRouteMapping(RouteMappingDto routeMappingDto);
     Task DeleteRouteMapping(Guid id);
+    Task<RouteMappingDto> FindRouteMappingBySourceAlias(string sourceAlias);
 }

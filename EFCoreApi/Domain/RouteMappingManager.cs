@@ -175,6 +175,25 @@ public class RouteMappingManager : IRouteMappingManager
 
         await _routeMappingAccessor.Delete(existing!);
     }
+    
+    #region RedirectController used
+
+    public async Task<RouteMappingDto> FindRouteMappingBySourceAlias(string sourceAlias)
+    {
+        var currentUser = await getCurrentUser();
+        var matchedMappings = await _routeMappingAccessor.List(
+            mapping => 
+                (mapping.IsOfficial || mapping.CreatedBy == currentUser.Id.ToString()) &&
+                mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower())    
+            );
+        
+        Exception<EntityNotFoundException>.ThrowOn(() => !matchedMappings.Any(), $"Cannot find redirecting url by {nameof(sourceAlias)}: {sourceAlias}");
+
+        return _mapper.Map<RouteMappingDto>(matchedMappings.First());
+    } 
+    
+
+    #endregion
 
     // TODO: Maybe move to a custom authorize attribute or utility class?
     private async Task<User> getCurrentUser()
