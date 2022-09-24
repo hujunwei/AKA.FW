@@ -72,7 +72,7 @@ function Footer({ company, links }) {
             &nbsp;{name}&nbsp;
           </MDTypography>
         </Link>
-        for a more efficient work experience.
+        for a more efficient work and life experience.
       </MDBox>
       <MDBox
         component="ul"
@@ -99,9 +99,9 @@ function Footer({ company, links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "One Strata, Biz-UI @ FREEWHEEL" },
+  company: { href: "https://wiki.freewheel.tv/", name: "One Strata, Biz-UI @ FREEWHEEL" },
   links: [
-    { href: "https://www.creative-tim.com/presentation", name: "Contact Us" },
+    { href: "mailto:jwhu@apac.freewheel.com", name: "Contact Us" },
   ],
 };
 
