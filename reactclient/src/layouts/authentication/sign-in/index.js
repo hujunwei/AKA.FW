@@ -43,25 +43,40 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import useToken from "utilities/UseToken";
 import Constants from "utilities/Constants";
-
-async function loginUser(credentials) {
-  return fetch(Constants.API_URL_LOGIN, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  }).then((data) => data.json());
-}
+import renderAlert from "utilities/renderAlert";
+import checkAndConvertResponse from "utilities/checkAndConvertResponse";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState();
+  const [loginError, setLoginError] = useState(false);
   const { setToken } = useToken();
 
   const navigate = useNavigate();
+
+  async function loginUser(credentials) {
+    return fetch(Constants.API_URL_LOGIN, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    })
+      .then(checkAndConvertResponse)
+      .then((data) => {
+        if (!data.isError) {
+          setLoginError(false);
+          setLoading(false);
+          setToken(data);
+          navigate("/dashboard");
+        } else {
+          setLoginError(true);
+          setLoading(false);
+        }
+      });
+  }
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -70,15 +85,10 @@ function Basic() {
 
     setLoading(true);
 
-    const token = await loginUser({
+    await loginUser({
       userName,
       password,
     });
-
-    setToken(token);
-    setLoading(false);
-
-    navigate("/dashboard");
   };
 
   return (
@@ -155,9 +165,10 @@ function Basic() {
                 variant="contained"
                 fullWidth
               >
-                submit
+                sign in
               </LoadingButton>
             </MDBox>
+            {loginError && renderAlert()}
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}

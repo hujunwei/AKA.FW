@@ -12,29 +12,78 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
 
 // Authentication layout components
-import CoverLayout from "layouts/authentication/components/CoverLayout";
+import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
+import Constants from "utilities/Constants";
+import renderAlert from "utilities/renderAlert";
+import checkAndConvertResponse from "utilities/checkAndConvertResponse";
+
 function Cover() {
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+  const [nickname, setNickName] = useState();
+  const [loading, setLoading] = useState();
+  const [registerError, setRegisterError] = useState();
+
+  const navigate = useNavigate();
+
+  async function rigisterUser(credentials) {
+    return fetch(Constants.API_URL_REGISTER, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    })
+      .then(checkAndConvertResponse)
+      .then((data) => {
+        if (!data.isError) {
+          setRegisterError(false);
+          setLoading(false);
+          navigate("/authentication/sign-in");
+        } else {
+          setRegisterError(true);
+          setLoading(false);
+        }
+      });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    // We enforce username to be email
+    const email = username;
+
+    await rigisterUser({
+      nickname,
+      username,
+      password,
+      email,
+    });
+  };
+
   return (
-    <CoverLayout image={bgImage}>
+    <BasicLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
@@ -47,50 +96,53 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join us today
+          <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+            Start AKA.FREEWHEEL today
           </MDTypography>
           <MDTypography display="block" variant="button" color="white" my={1}>
-            Enter your email and password to register
+            Enter your nickname, username and password to register.
           </MDTypography>
         </MDBox>
+
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Nickname"
+                  onChange={(e) => setNickName(e.target.value)}
+                  fullWidth
+                />
+              </MDBox>
+              <MDInput
+                type="email"
+                label="Username"
+                onChange={(e) => setUserName(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
+              <MDInput
+                type="password"
+                label="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
-              </MDButton>
+              <LoadingButton
+                color="success"
+                type="submit"
+                loading={loading}
+                loadingPosition="start"
+                variant="contained"
+                fullWidth
+              >
+                register
+              </LoadingButton>
             </MDBox>
+            {registerError && renderAlert()}
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Already have an account?{" "}
@@ -109,7 +161,7 @@ function Cover() {
           </MDBox>
         </MDBox>
       </Card>
-    </CoverLayout>
+    </BasicLayout>
   );
 }
 

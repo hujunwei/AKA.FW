@@ -8,7 +8,7 @@ public class UserDto
     public string NickName { get; set; } = default!;
     public string Email { get; set; } = default!; 
     public bool EmailConfirmed { get; set; }
-    public string PhoneNumber { get; set; } = default!;
+    public string? PhoneNumber { get; set; } = default!;
     public bool PhoneNumberConfirmed { get; set; }
     public bool TwoFactorEnabled { get; set; }
     public DateTimeOffset LockoutEnd { get; set; } = default!;
