@@ -24,6 +24,7 @@ import MenuItem from "@mui/material/MenuItem";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDBadge from "components/MDBadge";
 
 // Material Dashboard 2 React examples
 import DataTable from "examples/Tables/DataTable";
@@ -64,8 +65,8 @@ function Projects() {
   const columns = [
     { Header: "name", accessor: "name", width: "40%", align: "left" },
     { Header: "alias", accessor: "alias", width: "20%", align: "left" },
-    { Header: "targeturl", accessor: "targeturl", width: "20%", align: "left" },
-    { Header: "isactive", accessor: "isactive", width: "20%", align: "center" },
+    { Header: "target url", accessor: "targeturl", width: "20%", align: "left" },
+    { Header: "status", accessor: "isactive", width: "20%", align: "center" },
   ];
   const { token } = useToken();
   const [ loading, setLoading ] = useState(false);
@@ -118,7 +119,7 @@ function Projects() {
       ),
       isactive: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {url.isActive ? "true" : "false"}
+          {url.isActive ? <MDBadge color="success" badgeContent="Active" container /> : <MDBadge color="error" badgeContent="Deactivated" container />}
         </MDTypography>
       )
   }));
@@ -128,7 +129,7 @@ function Projects() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            Official HOT alias links @ FREEWHEEL
+            Official alias links @ FREEWHEEL
           </MDTypography>
         </MDBox>
         <MDBox color="text" px={2}>
