@@ -23,6 +23,7 @@ import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -33,7 +34,6 @@ import GoogleIcon from "@mui/icons-material/Google";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -58,18 +58,25 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
+  const { setToken } = useToken();
+
   const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  const { setToken } = useToken();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+
     const token = await loginUser({
       userName,
       password,
     });
+
     setToken(token);
+    setLoading(false);
 
     navigate("/dashboard");
   };
@@ -112,10 +119,20 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" onChange={(e) => setUserName(e.target.value)} fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                onChange={(e) => setUserName(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" onChange={(e) => setPassword(e.target.value)} fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -130,9 +147,16 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton type="submit" variant="gradient" color="info" fullWidth>
-                sign in
-              </MDButton>
+              <LoadingButton
+                color="success"
+                type="submit"
+                loading={loading}
+                loadingPosition="start"
+                variant="contained"
+                fullWidth
+              >
+                submit
+              </LoadingButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
