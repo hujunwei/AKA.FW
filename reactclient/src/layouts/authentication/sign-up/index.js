@@ -33,8 +33,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 import Constants from "utilities/Constants";
-import renderAlert from "utilities/renderAlert";
-import checkAndConvertResponse from "utilities/checkAndConvertResponse";
+import useErrorHandler from "utilities/useErrorHandler";
 
 function Cover() {
   const [username, setUserName] = useState();
@@ -42,7 +41,8 @@ function Cover() {
   const [nickname, setNickName] = useState();
   const [loading, setLoading] = useState();
   const [registerError, setRegisterError] = useState();
-
+  const { renderAlert, checkAndConvertResponse } = useErrorHandler();
+  
   const navigate = useNavigate();
 
   async function rigisterUser(credentials) {

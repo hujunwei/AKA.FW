@@ -43,8 +43,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import useToken from "utilities/UseToken";
 import Constants from "utilities/Constants";
-import renderAlert from "utilities/renderAlert";
-import checkAndConvertResponse from "utilities/checkAndConvertResponse";
+import useErrorHandler from "utilities/useErrorHandler";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -53,6 +52,7 @@ function Basic() {
   const [loading, setLoading] = useState();
   const [loginError, setLoginError] = useState(false);
   const { setToken } = useToken();
+  const { renderAlert, checkAndConvertResponse } = useErrorHandler();
 
   const navigate = useNavigate();
 
