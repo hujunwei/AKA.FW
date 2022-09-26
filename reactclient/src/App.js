@@ -47,6 +47,7 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import Redirect from "layouts/redirect";
+import Dashboard from "layouts/dashboard";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -149,6 +150,7 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
+        <Route path="/" element={<Dashboard />} />
         {getRoutes(routes)}
         <Route path="*" element={<Redirect />} />
       </Routes>

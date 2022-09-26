@@ -25,30 +25,40 @@ import useToken from "utilities/UseToken";
 import Constants from "utilities/Constants";
 import useErrorHandler from "utilities/useErrorHandler";
 
+import { Card } from "@mui/material";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import MDTypography from "components/MDTypography";
+import { useNavigate } from "react-router-dom";
+
 function Redirect() {
   const { token } = useToken();
-  const [ redirectError, setRedirectError] = useState(false);
-  const { renderAlert, checkAndConvertResponse } = useErrorHandler();
+  const [redirectError, setRedirectError] = useState(false);
+  const { checkAndConvertResponse } = useErrorHandler();
 
   const alias = window.location.pathname.replace("/", "");
+  const navigate = useNavigate();
+  const redirectToMain = () => navigate("/dashboard");
 
+  // TODO: how to solve fail to fetch error?
   async function findTargetUrlToRedirect() {
-    return fetch(`${Constants.API_URL_REDIRECT}/${alias}` , {
+    return fetch(`${Constants.API_URL_REDIRECT}/${alias}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     })
       .then(checkAndConvertResponse)
       .then((responseJson) => {
         if (responseJson.isError) {
-          setRedirectError(true);        
+          setRedirectError(true);
           return;
         }
 
-        setRedirectError(false); 
-        window.location.replace(responseJson.targetUrl);    
+        setRedirectError(false);
+        window.location.replace(responseJson.targetUrl);
       });
   }
 
@@ -58,7 +68,24 @@ function Redirect() {
 
   return (
     <BasicLayout image={bgImage}>
-      { redirectError && renderAlert() }
+      {redirectError && (
+        <Card>
+          <CardContent>
+            <MDTypography variant="h4" color="error" fontWeight="medium" gutterBottom>
+              AN ERROR OCCURRED
+            </MDTypography>
+            <MDTypography variant="caption" color="text">
+              Please check your alias is correct. If issue persists, please{" "}
+              <a href="mailto:jwhu@apac.freewheel.com">contact us</a>.
+            </MDTypography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={redirectToMain}>
+              Home
+            </Button>
+          </CardActions>
+        </Card>
+      )}
     </BasicLayout>
   );
 }
