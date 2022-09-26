@@ -21,6 +21,8 @@ import Icon from "@mui/material/Icon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+import MDSpinner from "react-md-spinner";
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -32,7 +34,6 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import Constants from "utilities/Constants";
 import useToken from "utilities/UseToken";
-import renderProgress from "utilities/renderProgress";
 import useErrorHandler from "utilities/useErrorHandler";
 
 function Projects() {
@@ -69,11 +70,11 @@ function Projects() {
     { Header: "status", accessor: "isactive", width: "20%", align: "center" },
   ];
   const { token } = useToken();
-  const [ loading, setLoading ] = useState(false);
-  const [ loadOfficialUrlsError, setLoadOfficialUrlsError ] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadOfficialUrlsError, setLoadOfficialUrlsError] = useState(false);
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
-  const [ tableData, setTableData ] = useState([]);
-  
+  const [tableData, setTableData] = useState([]);
+
   async function loadOfficialUrls() {
     return fetch(Constants.API_URL_LIST_OFFCIAL_MAPPINGS, {
       method: "GET",
@@ -87,12 +88,12 @@ function Projects() {
         setLoading(false);
 
         if (responseJson.isError) {
-          setLoadOfficialUrlsError(true);  
+          setLoadOfficialUrlsError(true);
           return;
         }
 
-        setLoadOfficialUrlsError(false);      
-        setTableData(responseJson);   
+        setLoadOfficialUrlsError(false);
+        setTableData(responseJson);
       });
   }
 
@@ -101,27 +102,31 @@ function Projects() {
     await loadOfficialUrls();
   }, []);
 
-  const rows = tableData.map(url => ({
-      name: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {url.name}
-        </MDTypography>
-      ),
-      alias: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {url.sourceAlias}
-        </MDTypography>
-      ),
-      targeturl: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {url.targetUrl}
-        </MDTypography>
-      ),
-      isactive: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {url.isActive ? <MDBadge color="success" badgeContent="Active" container /> : <MDBadge color="error" badgeContent="Deactivated" container />}
-        </MDTypography>
-      )
+  const rows = tableData.map((url) => ({
+    name: (
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {url.name}
+      </MDTypography>
+    ),
+    alias: (
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {url.sourceAlias}
+      </MDTypography>
+    ),
+    targeturl: (
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {url.targetUrl}
+      </MDTypography>
+    ),
+    isactive: (
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {url.isActive ? (
+          <MDBadge color="success" badgeContent="Active" container />
+        ) : (
+          <MDBadge color="error" badgeContent="Deactivated" container />
+        )}
+      </MDTypography>
+    ),
   }));
 
   return (
@@ -129,7 +134,7 @@ function Projects() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            Official alias links @ FREEWHEEL
+            Official alias links @ FREEWHEEL {loading && <MDSpinner aria-label="Loading..." />}
           </MDTypography>
         </MDBox>
         <MDBox color="text" px={2}>
@@ -138,10 +143,9 @@ function Projects() {
           </Icon>
         </MDBox>
         {renderMenu}
-      </MDBox>
-      {loading && renderProgress()}
+      </MDBox> 
       {loadOfficialUrlsError && renderAlert()}
-      <MDBox>
+      <MDBox display="flex" alignItems="center">
         <DataTable
           table={{ columns, rows }}
           showTotalEntries={false}

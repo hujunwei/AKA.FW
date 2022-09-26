@@ -1,5 +1,5 @@
-import LinearProgress from '@mui/material/LinearProgress';
+import MDSpinner from "react-md-spinner"
 
 export default function renderProgress() {
-    return  <LinearProgress color="secondary" />
+    return  <MDSpinner />
 }
