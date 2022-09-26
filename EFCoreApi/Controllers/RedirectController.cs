@@ -1,4 +1,5 @@
 using EFCoreApi.Domain;
+using EFCoreApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Utilities;
@@ -19,13 +20,13 @@ namespace EFCoreApi.Controllers
 
         // GET: api/Redirect/{sourceAlias}
         [HttpGet("{sourceAlias}")]
-        public async Task<RedirectResult> RedirectTo(string sourceAlias)
+        public async Task<RouteMappingDto> RedirectTo(string sourceAlias)
         {
             Exception<ArgumentNullException>.ThrowOn(() => string.IsNullOrWhiteSpace(sourceAlias), $"Parameter {nameof(sourceAlias)} cannot be empty.");
 
             var routeMapping = await _routeMappingsManager.FindRouteMappingBySourceAlias(sourceAlias);
 
-            return RedirectPermanent(routeMapping.TargetUrl);
+            return routeMapping;
         }
     }
 }

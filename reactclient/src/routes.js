@@ -41,7 +41,6 @@ import Tables from "layouts/tables";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import Redirect from "layouts/redirect";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -62,14 +61,6 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/myurls",
     component: <Tables />,
-  },
-  {
-    type: "collapse",
-    name: "Redirect",
-    key: "redirect",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/redirect",
-    component: <Redirect />,
   },
   {
     type: "collapse",

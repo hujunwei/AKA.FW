@@ -35,7 +35,8 @@ public class RouteMappingDtoValidator : AbstractValidator<RouteMappingDto>
 
     public RouteMappingDtoValidator()
     {
-        RuleFor(p => p.SourceAlias).Must(url => !s_predefinedUrls.Any(purl => url.Contains(purl, StringComparison.OrdinalIgnoreCase)));
+        RuleFor(p => p.SourceAlias)
+            .Must(url => !s_predefinedUrls.Any(purl => url.Contains(purl, StringComparison.OrdinalIgnoreCase) && !url.Contains('/')));
         RuleFor(p => p.TargetUrl).Must(url => !string.IsNullOrWhiteSpace(url));
     }
 }

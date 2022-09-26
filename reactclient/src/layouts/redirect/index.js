@@ -13,10 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// import { useState } from "react";
-
-// // react-router-dom components
-// import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -24,14 +21,44 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/freewheel_redirecting.png";
 
-// import useToken from "utilities/UseToken";
-// import Constants from "utilities/Constants";
-// import useErrorHandler from "utilities/useErrorHandler";
+import useToken from "utilities/UseToken";
+import Constants from "utilities/Constants";
+import useErrorHandler from "utilities/useErrorHandler";
 
 function Redirect() {
+  const { token } = useToken();
+  const [ redirectError, setRedirectError] = useState(false);
+  const { renderAlert, checkAndConvertResponse } = useErrorHandler();
+
+  const alias = window.location.pathname.replace("/", "");
+
+  async function findTargetUrlToRedirect() {
+    return fetch(`${Constants.API_URL_REDIRECT}/${alias}` , {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+    })
+      .then(checkAndConvertResponse)
+      .then((responseJson) => {
+        if (responseJson.isError) {
+          setRedirectError(true);        
+          return;
+        }
+
+        setRedirectError(false); 
+        window.location.replace(responseJson.targetUrl);    
+      });
+  }
+
+  useEffect(async () => {
+    await findTargetUrlToRedirect();
+  }, []);
+
   return (
     <BasicLayout image={bgImage}>
-      <h1>Lol</h1>
+      { redirectError && renderAlert() }
     </BasicLayout>
   );
 }

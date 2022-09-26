@@ -9,7 +9,8 @@ const ENDPOINTS = {
   DELETE_PERSON: "api/people",
   LOGIN: "api/login",
   REGISTER: "api/users",
-  LIST_OFFCIAL_MAPPINGS: "api/routemappings/official"
+  LIST_OFFCIAL_MAPPINGS: "api/routemappings/official",
+  REDIRECT: "api/redirect"
 };
 
 const development = {
@@ -21,6 +22,7 @@ const development = {
   API_URL_LOGIN: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.LOGIN}`,
   API_URL_REGISTER: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.REGISTER}`,
   API_URL_LIST_OFFCIAL_MAPPINGS: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.LIST_OFFCIAL_MAPPINGS}`,
+  API_URL_REDIRECT: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS.REDIRECT}`,
 };
 
 const production = {
@@ -32,6 +34,7 @@ const production = {
   API_URL_LOGIN: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.LOGIN}`,
   API_URL_REGISTER: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.REGISTER}`,
   API_URL_LIST_OFFCIAL_MAPPINGS: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.LIST_OFFCIAL_MAPPINGS}`,
+  API_URL_REDIRECT: `${API_BASE_URL_PRODUCTION}/${ENDPOINTS.REDIRECT}`,
 };
 
 const Constants = process.env.NODE_ENV === "development" ? development : production;
