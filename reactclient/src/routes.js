@@ -64,6 +64,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Redirect",
+    key: "redirect",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/redirect",
+    component: <Tables />,
+  },
+  {
+    type: "collapse",
     name: "Tools",
     key: "tools",
     icon: <Icon fontSize="small">person</Icon>,
