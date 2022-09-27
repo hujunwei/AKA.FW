@@ -22,9 +22,9 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Divider } from "@mui/material";
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -44,19 +44,21 @@ import Constants from "utilities/Constants";
 import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
 
+import AliasCreationForm from "./forms/aliascreationform";
+
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -104,6 +106,14 @@ function Tables() {
       });
   }
 
+  const onPersonCreated = async (createdPerson) => {
+    if (createdPerson) {
+      await loadUserUrls();
+    } else {
+      setOpenAdd(false);
+    }
+  }
+
   useEffect(async () => {
     setLoading(true);
     await loadUserUrls();
@@ -140,16 +150,21 @@ function Tables() {
       </MDTypography>
     ),
     actions: (
-      <MDBox sx={{
-        display: 'flex',
-        alignItems: 'center'
-      }}>
-        <IconButton aria-label="edit" size="small" onClick={handleOpenAdd}>
+      <MDBox
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <IconButton aria-label="edit" size="small" onClick={handleOpenEdit}>
           <EditIcon color="info" />
         </IconButton>
-        <Divider orientation="vertical" sx={{
-            height: '20px',
-          }}/>
+        <Divider
+          orientation="vertical"
+          sx={{
+            height: "20px",
+          }}
+        />
         <IconButton aria-label="delete" size="small">
           <DeleteIcon color="error" />
         </IconButton>
@@ -185,7 +200,7 @@ function Tables() {
                   <MDBox>
                     {loading && <MDSpinner aria-label="Loading..." />}
                     {!loading && (
-                      <MDButton variant="gradient" color="success" onClick={handleOpenEdit}>
+                      <MDButton variant="gradient" color="success" onClick={handleOpenAdd}>
                         <AddIcon>Add</AddIcon>&nbsp; Add
                       </MDButton>
                     )}
@@ -219,12 +234,10 @@ function Tables() {
         }}
       >
         <Fade in={openAdd}>
+          
           <MDBox sx={style}>
-            <MDTypography id="transition-modal-title" variant="h6" component="h2">
-              Add a new customized alias link
-            </MDTypography>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <AliasCreationForm onPersonCreated={onPersonCreated} />
             </MDTypography>
           </MDBox>
         </Fade>
