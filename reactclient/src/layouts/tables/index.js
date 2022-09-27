@@ -22,6 +22,9 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Divider } from "@mui/material";
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -46,6 +49,18 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 function Tables() {
   const columns = [
     { Header: "name", accessor: "name", width: "20%", align: "left" },
@@ -60,6 +75,9 @@ function Tables() {
   const [loadUserUrlsError, setLoadUserUrlsError] = useState(false);
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
   const [tableData, setTableData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   async function loadUserUrls() {
     return fetch(Constants.API_URL_LIST_USER_MAPPINGS, {
@@ -123,7 +141,7 @@ function Tables() {
         display: 'flex',
         alignItems: 'center'
       }}>
-        <IconButton aria-label="edit" size="small">
+        <IconButton aria-label="edit" size="small" onClick={handleOpen}>
           <EditIcon color="info" />
         </IconButton>
         <Divider orientation="vertical" sx={{
@@ -186,6 +204,28 @@ function Tables() {
         </Grid>
       </MDBox>
       <Footer />
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <MDBox sx={style}>
+            <MDTypography id="transition-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </MDTypography>
+            <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </MDTypography>
+          </MDBox>
+        </Fade>
+      </Modal>
     </DashboardLayout>
   );
 }
