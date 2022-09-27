@@ -75,9 +75,12 @@ function Tables() {
   const [loadUserUrlsError, setLoadUserUrlsError] = useState(false);
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
   const [tableData, setTableData] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const handleOpenAdd = () => setOpenAdd(true);
+  const handleCloseAdd = () => setOpenAdd(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleOpenEdit = () => setOpenEdit(true);
+  const handleCloseEdit = () => setOpenEdit(false);
 
   async function loadUserUrls() {
     return fetch(Constants.API_URL_LIST_USER_MAPPINGS, {
@@ -141,7 +144,7 @@ function Tables() {
         display: 'flex',
         alignItems: 'center'
       }}>
-        <IconButton aria-label="edit" size="small" onClick={handleOpen}>
+        <IconButton aria-label="edit" size="small" onClick={handleOpenAdd}>
           <EditIcon color="info" />
         </IconButton>
         <Divider orientation="vertical" sx={{
@@ -182,7 +185,7 @@ function Tables() {
                   <MDBox>
                     {loading && <MDSpinner aria-label="Loading..." />}
                     {!loading && (
-                      <MDButton variant="gradient" color="success">
+                      <MDButton variant="gradient" color="success" onClick={handleOpenEdit}>
                         <AddIcon>Add</AddIcon>&nbsp; Add
                       </MDButton>
                     )}
@@ -207,18 +210,40 @@ function Tables() {
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
+        open={openAdd}
+        onClose={handleCloseAdd}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-        <Fade in={open}>
+        <Fade in={openAdd}>
           <MDBox sx={style}>
             <MDTypography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
+              Add a new customized alias link
+            </MDTypography>
+            <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </MDTypography>
+          </MDBox>
+        </Fade>
+      </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openEdit}
+        onClose={handleCloseEdit}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openEdit}>
+          <MDBox sx={style}>
+            <MDTypography id="transition-modal-title" variant="h6" component="h2">
+              Edit
             </MDTypography>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
