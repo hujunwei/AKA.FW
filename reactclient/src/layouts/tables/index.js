@@ -45,6 +45,7 @@ import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
 
 import AliasCreationForm from "./forms/aliascreationform";
+import AliasUpdateForm from "./forms/aliasupdateform";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -81,7 +82,8 @@ function Tables() {
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
+  const [editingUrl, setEditingUrl] = useState(null);
+  const handleOpenEdit = (url) => { setEditingUrl(url); setOpenEdit(true); }
   const handleCloseEdit = () => setOpenEdit(false);
 
   async function loadUserUrls() {
@@ -106,12 +108,20 @@ function Tables() {
       });
   }
 
-  const onPersonCreated = async (createdPerson) => {
-    if (createdPerson) {
+  const onAliasCreated = async (createdAlias) => {
+    if (createdAlias) {
       await loadUserUrls();
     } 
     
     setOpenAdd(false);
+  }
+
+  const onAliasUpdated = async (updatedAlias) => {
+    if (updatedAlias) {
+      await loadUserUrls();
+    } 
+    
+    setOpenEdit(false);
   }
 
   useEffect(async () => {
@@ -156,7 +166,7 @@ function Tables() {
           alignItems: "center",
         }}
       >
-        <IconButton aria-label="edit" size="small" onClick={handleOpenEdit}>
+        <IconButton aria-label="edit" size="small" onClick={() => handleOpenEdit(url)}>
           <EditIcon color="info" />
         </IconButton>
         <Divider
@@ -234,10 +244,9 @@ function Tables() {
         }}
       >
         <Fade in={openAdd}>
-          
           <MDBox sx={style}>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
-              <AliasCreationForm onPersonCreated={onPersonCreated} />
+              <AliasCreationForm onAliasCreated={onAliasCreated} />
             </MDTypography>
           </MDBox>
         </Fade>
@@ -254,12 +263,9 @@ function Tables() {
         }}
       >
         <Fade in={openEdit}>
-          <MDBox sx={style}>
-            <MDTypography id="transition-modal-title" variant="h6" component="h2">
-              Edit
-            </MDTypography>
+        <MDBox sx={style}>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <AliasUpdateForm editingUrl={editingUrl} onAliasUpdated={onAliasUpdated} />
             </MDTypography>
           </MDBox>
         </Fade>

@@ -14,7 +14,7 @@ import useToken from "utilities/UseToken";
 
 export default function AliasCreationForm(props) {
   /* eslint-disable react/prop-types */
-  const { onPersonCreated } = props;
+  const { onAliasCreated } = props;
 
   const [ name, setName ] = useState(null);
   const [ alias, setAlias ] = useState(null);
@@ -56,7 +56,7 @@ export default function AliasCreationForm(props) {
         setAddError(false);
         setLoading(false);
          /* eslint-disable react/prop-types */
-        onPersonCreated(mappingToCreate);
+        onAliasCreated(mappingToCreate);
       });
   };
 
@@ -122,7 +122,7 @@ export default function AliasCreationForm(props) {
               loading={false}
               loadingPosition="start"
               variant="contained"
-              onClick={() => onPersonCreated(null)}
+              onClick={() => onAliasCreated(null)}
             >
               Cancel
             </LoadingButton>
