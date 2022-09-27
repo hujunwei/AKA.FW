@@ -11,8 +11,17 @@ export default function useErrorHandler() {
       return { isError: true };
   };
 
+  const checkResponseStatus = (response) => {
+    if (response.status >= 200 && response.status <= 299) {
+        return { isError: false };
+      }
+  
+      return { isError: true };
+  };
+
   return {
     renderAlert: renderMdAlert,
-    checkAndConvertResponse: checkAndConvertResponseBody
+    checkAndConvertResponse: checkAndConvertResponseBody,
+    checkResponse: checkResponseStatus
   };
 }
