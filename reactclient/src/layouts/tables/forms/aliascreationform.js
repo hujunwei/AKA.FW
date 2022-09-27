@@ -12,33 +12,34 @@ import useErrorHandler from "utilities/useErrorHandler";
 
 export default function AliasCreationForm(props) {
   /* eslint-disable react/prop-types */
-    const { onPersonCreated } = props;
-  const initialFormData = {};
+  const { onPersonCreated } = props;
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [ name, setName ] = useState(null);
+  const [ alias, setAlias ] = useState(null);
+  const [ targetUrl, setTargetUrl ] = useState(null);
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
-  const [addError, setAddError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [ addError, setAddError ] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setLoading(true);
 
+    // const mappingToCreate = {
+    //   name: name,
+    //   sourceAlias: alias,
+    //   targetUrl: targetUrl,
+    //   isActive: true,
+    //   isOfficial: false,
+    // };
     const mappingToCreate = {
-      name: formData.name,
-      sourceAlias: formData.alias,
-      targetUrl: formData.targetUrl,
-      isActive: true,
-      isOfficial: false,
-    };
+        name,
+        sourceAlias: alias,
+        targetUrl,
+        isActive: true,
+        isOfficial: false,
+      };
 
     fetch(Constants.API_URL_CREARE_MAPPING, {
       method: "POST",
@@ -55,11 +56,11 @@ export default function AliasCreationForm(props) {
           return;
         }
 
-        setFormData(responseJson);
+       // setFormData(responseJson);
         setAddError(false);
         setLoading(false);
       });
-      /* eslint-disable react/prop-types */
+    /* eslint-disable react/prop-types */
     onPersonCreated(mappingToCreate);
   };
 
@@ -86,8 +87,7 @@ export default function AliasCreationForm(props) {
             <MDInput
               type="text"
               label="Name"
-              value={formData.name}
-              onChange={e => handleChange(e)}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Friendly name..."
               fullWidth
             />
@@ -96,8 +96,7 @@ export default function AliasCreationForm(props) {
             <MDInput
               type="text"
               label="Alias"
-              value={formData.alias}
-              onChange={e => handleChange(e)}
+              onChange={(e) => setAlias(e.target.value)}
               placeholder="Custom alias name, case insensitive..."
               fullWidth
             />
@@ -106,8 +105,7 @@ export default function AliasCreationForm(props) {
             <MDInput
               type="text"
               label="Target URL"
-              value={formData.targetUrl}
-              onChange={e => handleChange(e)}
+              onChange={(e) => setTargetUrl(e.target.value)}
               placeholder="Full url, e.g 'https://www.google.com'..."
               fullWidth
             />
