@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Security.Authentication;
 using AutoMapper;
 using EFCoreApi.DTOs;
@@ -180,18 +181,24 @@ public class RouteMappingManager : IRouteMappingManager
 
     public async Task<RouteMappingDto> FindRouteMappingBySourceAlias(string sourceAlias)
     {
-        var currentUser = await getCurrentUser();
-        var matchedMappings = await _routeMappingAccessor.List(
-            mapping => 
-                (mapping.IsOfficial || mapping.CreatedBy == currentUser.Id.ToString()) &&
-                mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower())    
-            );
-        
-        Exception<EntityNotFoundException>.ThrowOn(() => !matchedMappings.Any(), $"Cannot find redirecting url by {nameof(sourceAlias)}: {sourceAlias}");
+        var isUserLoggedIn = !string.IsNullOrWhiteSpace(ServiceRuntimeContext.CurrentUserClaims?.Identity?.Name);
+        var currentUser = isUserLoggedIn ? await getCurrentUser() : null;
+
+        // If user logged in, we search both his/her mappings.
+        // Else we just check official mappings.
+        Expression<Func<RouteMapping, bool>> predicate = isUserLoggedIn
+            ? mapping => (mapping.IsOfficial || mapping.CreatedBy == currentUser.Id.ToString()) &&
+                         mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower())
+            : mapping => mapping.IsOfficial && mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower());
+
+        var matchedMappings = await _routeMappingAccessor.List(predicate);
+        var checkingScope = isUserLoggedIn ? "both official and user mappings" : "official mappings only";
+        Exception<EntityNotFoundException>.ThrowOn(
+            () => !matchedMappings.Any(), 
+            $"Cannot find redirecting url by {nameof(sourceAlias)}: {sourceAlias}, checked {checkingScope}.");
 
         return _mapper.Map<RouteMappingDto>(matchedMappings.First());
-    } 
-    
+    }
 
     #endregion
 
