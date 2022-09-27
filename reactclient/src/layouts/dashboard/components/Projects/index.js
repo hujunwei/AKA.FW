@@ -18,17 +18,15 @@ import { useEffect, useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 
-import MDSpinner from "react-md-spinner";
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+import MDSpinner from "react-md-spinner";
 
 // Material Dashboard 2 React examples
 import DataTable from "examples/Tables/DataTable";
 
-// Data
 import Constants from "utilities/Constants";
 import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
