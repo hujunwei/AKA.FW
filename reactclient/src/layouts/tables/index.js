@@ -109,9 +109,9 @@ function Tables() {
   const onPersonCreated = async (createdPerson) => {
     if (createdPerson) {
       await loadUserUrls();
-    } else {
-      setOpenAdd(false);
-    }
+    } 
+    
+    setOpenAdd(false);
   }
 
   useEffect(async () => {

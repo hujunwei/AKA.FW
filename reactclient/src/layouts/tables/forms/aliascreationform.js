@@ -10,6 +10,8 @@ import MDInput from "components/MDInput";
 import Constants from "utilities/Constants";
 import useErrorHandler from "utilities/useErrorHandler";
 
+import useToken from "utilities/UseToken";
+
 export default function AliasCreationForm(props) {
   /* eslint-disable react/prop-types */
   const { onPersonCreated } = props;
@@ -20,19 +22,13 @@ export default function AliasCreationForm(props) {
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
   const [ addError, setAddError ] = useState(false);
   const [ loading, setLoading ] = useState(false);
+  const { token } = useToken();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setLoading(true);
 
-    // const mappingToCreate = {
-    //   name: name,
-    //   sourceAlias: alias,
-    //   targetUrl: targetUrl,
-    //   isActive: true,
-    //   isOfficial: false,
-    // };
     const mappingToCreate = {
         name,
         sourceAlias: alias,
@@ -44,6 +40,7 @@ export default function AliasCreationForm(props) {
     fetch(Constants.API_URL_CREARE_MAPPING, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mappingToCreate),
@@ -56,12 +53,11 @@ export default function AliasCreationForm(props) {
           return;
         }
 
-       // setFormData(responseJson);
         setAddError(false);
         setLoading(false);
+         /* eslint-disable react/prop-types */
+        onPersonCreated(mappingToCreate);
       });
-    /* eslint-disable react/prop-types */
-    onPersonCreated(mappingToCreate);
   };
 
   return (
@@ -123,7 +119,7 @@ export default function AliasCreationForm(props) {
             &nbsp;&nbsp;&nbsp;&nbsp;
             <LoadingButton
               color="success"
-              loading={loading}
+              loading={false}
               loadingPosition="start"
               variant="contained"
               onClick={() => onPersonCreated(null)}
