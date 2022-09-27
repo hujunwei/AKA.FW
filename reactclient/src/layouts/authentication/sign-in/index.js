@@ -70,7 +70,7 @@ function Basic() {
           setLoginError(false);
           setLoading(false);
           setToken(data);
-          navigate("/dashboard");
+          navigate("/official");
         } else {
           setLoginError(true);
           setLoading(false);

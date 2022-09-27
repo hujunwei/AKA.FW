@@ -39,7 +39,7 @@ function Redirect() {
 
   const alias = window.location.pathname.replace("/", "");
   const navigate = useNavigate();
-  const redirectToMain = () => navigate("/dashboard");
+  const redirectToMain = () => navigate("/official");
 
   // TODO: how to solve fail to fetch error?
   async function findTargetUrlToRedirect() {
