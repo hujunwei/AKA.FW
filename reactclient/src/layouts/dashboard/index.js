@@ -43,7 +43,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
+                color="secondary"
                 icon="weekend"
                 title="Official Links"
                 count={281}
@@ -58,6 +58,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="warning"
                 icon="leaderboard"
                 title="Your Links"
                 count="18"
@@ -66,13 +67,14 @@ function Dashboard() {
                   amount: "-3%",
                   label: "than last month",
                 }}
+                style={{backgroundColor: "#390a8b"}}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
+                color="secondary"
                 icon="store"
                 title="Total Redirects Made"
                 count="34k"
@@ -87,7 +89,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="primary"
+                color="secondary"
                 icon="person_add"
                 title="Total Users"
                 count="91"

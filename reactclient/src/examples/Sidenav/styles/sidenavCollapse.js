@@ -14,21 +14,25 @@ Coded by www.creative-tim.com
 */
 function collapseItem(theme, ownerState) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
-  const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
+  // const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
+  const { active, transparentSidenav, whiteSidenav, darkMode } = ownerState;
 
-  const { white, transparent, dark, grey, gradients } = palette;
+  // const { white, transparent, dark, grey, gradients } = palette;
+  const { white, transparent, dark, grey } = palette;
   const { md } = boxShadows;
   const { borderRadius } = borders;
-  const { pxToRem, rgba, linearGradient } = functions;
+  // const { pxToRem, rgba, linearGradient } = functions;
+  const { pxToRem, rgba } = functions;
 
   return {
     background: active
-      ? linearGradient(gradients[sidenavColor].main, gradients[sidenavColor].state)
+      ? '#390a8b'
       : transparent.main,
-    color:
-      (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
-        ? dark.main
-        : white.main,
+    // color:
+    //   (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
+    //     ? dark.main
+    //     : white.main,
+    color: active ? white.main : dark.main,
     display: "flex",
     alignItems: "center",
     width: "100%",
@@ -65,7 +69,8 @@ function collapseItem(theme, ownerState) {
 
 function collapseIconBox(theme, ownerState) {
   const { palette, transitions, borders, functions } = theme;
-  const { transparentSidenav, whiteSidenav, darkMode, active } = ownerState;
+  // const { transparentSidenav, whiteSidenav, darkMode, active } = ownerState;
+  const { transparentSidenav, whiteSidenav, active } = ownerState;
 
   const { white, dark } = palette;
   const { borderRadius } = borders;
@@ -74,10 +79,11 @@ function collapseIconBox(theme, ownerState) {
   return {
     minWidth: pxToRem(32),
     minHeight: pxToRem(32),
-    color:
-      (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
-        ? dark.main
-        : white.main,
+    // color:
+    //   (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
+    //     ? dark.main
+    //     : white.main,
+    color: active ? white.main : dark.main,
     borderRadius: borderRadius.md,
     display: "grid",
     placeItems: "center",

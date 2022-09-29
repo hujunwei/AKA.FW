@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
-export default styled(Box)(({ theme, ownerState }) => {
+export default styled(Box)(({ theme, ownerState,isfw }) => {
   const { palette, functions, borders, boxShadows } = theme;
   const { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow } = ownerState;
 
@@ -78,16 +78,18 @@ export default styled(Box)(({ theme, ownerState }) => {
 
   // background value
   let backgroundValue = bgColor;
-
-  if (variant === "gradient") {
-    backgroundValue = validGradients.find((el) => el === bgColor)
-      ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
-      : white.main;
-  } else if (validColors.find((el) => el === bgColor)) {
-    backgroundValue = palette[bgColor] ? palette[bgColor].main : greyColors[bgColor];
-  } else {
+  if (isfw) {
+    backgroundValue = '#390a8b';
+  } else if (variant === "gradient") {
+      backgroundValue = validGradients.find((el) => el === bgColor)
+        ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
+        : white.main;
+    } else if (validColors.find((el) => el === bgColor)) {
+      backgroundValue = palette[bgColor] ? palette[bgColor].main : greyColors[bgColor];
+    } else {
     backgroundValue = bgColor;
   }
+
 
   // color value
   let colorValue = color;
