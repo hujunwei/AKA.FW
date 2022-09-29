@@ -45,6 +45,7 @@ import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
 
 import AliasCreationForm from "./forms/aliascreationform";
+import AliasUpdateForm from "./forms/aliasupdateform";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -75,13 +76,17 @@ function Tables() {
   const { token } = useToken();
   const [loading, setLoading] = useState(false);
   const [loadUserUrlsError, setLoadUserUrlsError] = useState(false);
-  const { renderAlert, checkAndConvertResponse } = useErrorHandler();
+  const { renderAlert, checkAndConvertResponse, checkResponse } = useErrorHandler();
   const [tableData, setTableData] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
+  const [editingUrl, setEditingUrl] = useState(null);
+  const handleOpenEdit = (url) => {
+    setEditingUrl(url);
+    setOpenEdit(true);
+  };
   const handleCloseEdit = () => setOpenEdit(false);
 
   async function loadUserUrls() {
@@ -106,12 +111,54 @@ function Tables() {
       });
   }
 
-  const onPersonCreated = async (createdPerson) => {
-    if (createdPerson) {
+  const onAliasCreated = async (createdAlias) => {
+    if (createdAlias) {
       await loadUserUrls();
-    } else {
-      setOpenAdd(false);
     }
+
+    setOpenAdd(false);
+  };
+
+  const onAliasUpdated = async (updatedAlias) => {
+    if (updatedAlias) {
+      await loadUserUrls();
+    }
+
+    setOpenEdit(false);
+  };
+
+  const onAliasDeleted = (deletedAliasId) => {
+    const tableDataCopy = [...tableData];
+
+    const index = tableDataCopy.findIndex((row) => row.id === deletedAliasId);
+
+    if (index !== -1) {
+      tableDataCopy.splice(index, 1);
+    }
+
+    setTableData(tableDataCopy);
+  };
+
+  async function deleteUrl(url) {
+    setLoading(true);
+
+    fetch(`${Constants.API_URL_DELETE_MAPPING}/${url.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+      .then(checkResponse)
+      .then((responseJson) => {
+        setLoading(false);
+
+        if (responseJson.isError) {
+          alert(`Error deleting link alias mapping with name: ${url.name}`);
+          return;
+        }
+
+        onAliasDeleted(url.id);
+      });
   }
 
   useEffect(async () => {
@@ -156,7 +203,7 @@ function Tables() {
           alignItems: "center",
         }}
       >
-        <IconButton aria-label="edit" size="small" onClick={handleOpenEdit}>
+        <IconButton aria-label="edit" size="small" onClick={() => handleOpenEdit(url)}>
           <EditIcon color="info" />
         </IconButton>
         <Divider
@@ -165,7 +212,16 @@ function Tables() {
             height: "20px",
           }}
         />
-        <IconButton aria-label="delete" size="small">
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={async () => {
+            if (
+              window.confirm(`Are you sure you want to delete the alias link named "${url.name}"?`)
+            )
+              await deleteUrl(url);
+          }}
+        >
           <DeleteIcon color="error" />
         </IconButton>
       </MDBox>
@@ -234,10 +290,9 @@ function Tables() {
         }}
       >
         <Fade in={openAdd}>
-          
           <MDBox sx={style}>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
-              <AliasCreationForm onPersonCreated={onPersonCreated} />
+              <AliasCreationForm onAliasCreated={onAliasCreated} />
             </MDTypography>
           </MDBox>
         </Fade>
@@ -255,11 +310,8 @@ function Tables() {
       >
         <Fade in={openEdit}>
           <MDBox sx={style}>
-            <MDTypography id="transition-modal-title" variant="h6" component="h2">
-              Edit
-            </MDTypography>
             <MDTypography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <AliasUpdateForm editingUrl={editingUrl} onAliasUpdated={onAliasUpdated} />
             </MDTypography>
           </MDBox>
         </Fade>

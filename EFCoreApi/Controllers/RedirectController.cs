@@ -8,7 +8,6 @@ namespace EFCoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RedirectController : ControllerBase
     {
         private readonly IRouteMappingManager _routeMappingsManager;
