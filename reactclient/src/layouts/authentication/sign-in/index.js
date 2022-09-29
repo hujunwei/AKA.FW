@@ -39,7 +39,7 @@ import MDInput from "components/MDInput";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+// import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import useToken from "utilities/UseToken";
 import Constants from "utilities/Constants";
@@ -92,7 +92,8 @@ function Basic() {
   };
 
   return (
-    <BasicLayout image={bgImage}>
+    // <BasicLayout image={bgImage}>
+    <BasicLayout image=''>
       <Card>
         <MDBox
           variant="gradient"
@@ -104,6 +105,7 @@ function Basic() {
           p={2}
           mb={1}
           textAlign="center"
+          isfw={1}
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
@@ -131,7 +133,7 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type="email"
-                label="Email"
+                label="@freewheel.com/@apac.freewheel.com"
                 onChange={(e) => setUserName(e.target.value)}
                 fullWidth
               />
@@ -161,9 +163,9 @@ function Basic() {
                 color="success"
                 type="submit"
                 loading={loading}
-                loadingPosition="start"
                 variant="contained"
                 fullWidth
+                style={{color: 'white', backgroundColor: '#390a8b'}}
               >
                 sign in
               </LoadingButton>

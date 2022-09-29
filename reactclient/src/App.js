@@ -43,7 +43,8 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
+// import brandWhite from "assets/images/logo-ct.png";
+import brandWhite from "assets/images/logo-ct1.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import Redirect from "layouts/redirect";

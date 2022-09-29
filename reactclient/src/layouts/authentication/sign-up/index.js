@@ -30,7 +30,7 @@ import MDInput from "components/MDInput";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+// import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 import Constants from "utilities/Constants";
 import useErrorHandler from "utilities/useErrorHandler";
@@ -83,7 +83,8 @@ function Cover() {
   };
 
   return (
-    <BasicLayout image={bgImage}>
+    // <BasicLayout image={bgImage}>
+    <BasicLayout image=''>
       <Card>
         <MDBox
           variant="gradient"
@@ -95,6 +96,7 @@ function Cover() {
           p={3}
           mb={1}
           textAlign="center"
+          isfw={1}
         >
           <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
             Start AKA.FREEWHEEL today
@@ -135,8 +137,8 @@ function Cover() {
                 color="success"
                 type="submit"
                 loading={loading}
-                loadingPosition="start"
                 variant="contained"
+                style={{color: 'white', backgroundColor: '#390a8b'}}
                 fullWidth
               >
                 register

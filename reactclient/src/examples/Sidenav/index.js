@@ -30,7 +30,7 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+// import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
@@ -49,7 +49,8 @@ import {
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
+  // const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
+  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
 
@@ -166,7 +167,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
-            <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}>
+            {/* <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}> */}
+            <MDTypography component="h6" variant="button" fontWeight="medium" color='dark'>
               {brandName}
             </MDTypography>
           </MDBox>
@@ -179,7 +181,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         }
       />
       <List>{renderRoutes}</List>
-      <MDBox p={2} mt="auto">
+      {/* <MDBox p={2} mt="auto">
         <MDButton
           component="a"
           href="https://www.creative-tim.com/product/material-dashboard-pro-react"
@@ -191,7 +193,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         >
           upgrade to pro
         </MDButton>
-      </MDBox>
+      </MDBox> */}
     </SidenavRoot>
   );
 }

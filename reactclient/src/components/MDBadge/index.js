@@ -44,6 +44,7 @@ MDBadge.defaultProps = {
   border: false,
   children: false,
   container: false,
+  isfw: 0
 };
 
 // Typechecking props of the MDBadge
@@ -65,6 +66,7 @@ MDBadge.propTypes = {
   border: PropTypes.bool,
   children: PropTypes.node,
   container: PropTypes.bool,
+  isfw: PropTypes.number
 };
 
 export default MDBadge;
