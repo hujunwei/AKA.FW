@@ -38,8 +38,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
 
   // styles for the sidenav when miniSidenav={false}
   const drawerOpenStyles = () => ({
-    // background: backgroundValue,
-    background: 'transparent',
+    background: darkMode ? "transparent": "white",
     transform: "translateX(0)",
     transition: transitions.create("transform", {
       easing: transitions.easing.sharp,
