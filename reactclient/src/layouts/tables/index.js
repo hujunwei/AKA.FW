@@ -257,7 +257,7 @@ function Tables() {
                     {loading && <MDSpinner aria-label="Loading..." />}
                     {!loading && (
                       <MDButton variant="gradient" color="success" onClick={handleOpenAdd}>
-                        <AddIcon>Add</AddIcon>&nbsp; Add
+                        <AddIcon>Add</AddIcon>
                       </MDButton>
                     )}
                   </MDBox>

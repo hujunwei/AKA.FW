@@ -58,7 +58,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="warning"
+                color="info"
                 icon="leaderboard"
                 title="Your Links"
                 count="18"
@@ -89,7 +89,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="info"
+                color="error"
                 icon="person_add"
                 title="Total Users"
                 count="91"

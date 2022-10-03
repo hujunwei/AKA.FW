@@ -64,9 +64,9 @@ export default function AliasCreationForm(props) {
     <Card>
       <MDBox
         variant="gradient"
-        bgColor="info"
+        bgColor="success"
         borderRadius="lg"
-        coloredShadow="info"
+        coloredShadow="success"
         mx={2}
         mt={-3}
         p={2}
