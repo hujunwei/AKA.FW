@@ -250,7 +250,7 @@ function Tables() {
                 <MDBox display="flex" justifyContent="space-between" alignItems="center" p={1}>
                   <MDBox>
                     <MDTypography variant="h6" color="white">
-                      Customize your own alias links
+                      Customize your alias
                     </MDTypography>
                   </MDBox>
                   <MDBox>
