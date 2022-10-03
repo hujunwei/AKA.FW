@@ -120,8 +120,8 @@ const colors = {
     },
 
     warning: {
-      main: "#FFA726",
-      state: "#FB8C00",
+      main: "#390a8b",
+      state: "#390a8b",
     },
 
     error: {
@@ -224,8 +224,8 @@ const colors = {
     },
 
     warning: {
-      background: "#ffd59f",
-      text: "#c87000",
+      background: "#390a8b",
+      text: "#390a8b",
     },
 
     error: {

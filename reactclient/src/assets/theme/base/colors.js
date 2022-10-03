@@ -50,8 +50,8 @@ const colors = {
   },
 
   secondary: {
-    main: "#390a8b",
-    focus: "#390a8b",
+    main: "#7b809a",
+    focus: "#8f93a9",
   },
 
   info: {
@@ -103,8 +103,8 @@ const colors = {
     },
 
     secondary: {
-      main: "#390a8b",
-      state: "#390a8b",
+      main: "#747b8a",
+      state: "#495361",
     },
 
     info: {
@@ -118,8 +118,8 @@ const colors = {
     },
 
     warning: {
-      main: "#FFA726",
-      state: "#FB8C00",
+      main: "#390a8b",
+      state: "#390a8b",
     },
 
     error: {
@@ -222,8 +222,8 @@ const colors = {
     },
 
     warning: {
-      background: "#ffd59f",
-      text: "#c87000",
+      background: "#390a8b",
+      text: "#390a8b",
     },
 
     error: {

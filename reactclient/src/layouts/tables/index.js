@@ -243,7 +243,7 @@ function Tables() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="secondary"
+                bgColor="warning"
                 borderRadius="lg"
                 coloredShadow="dark"
               >
