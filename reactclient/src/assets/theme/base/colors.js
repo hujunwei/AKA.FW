@@ -50,8 +50,8 @@ const colors = {
   },
 
   secondary: {
-    main: "#7b809a",
-    focus: "#8f93a9",
+    main: "#390a8b",
+    focus: "#390a8b",
   },
 
   info: {
@@ -103,8 +103,8 @@ const colors = {
     },
 
     secondary: {
-      main: "#747b8a",
-      state: "#495361",
+      main: "#390a8b",
+      state: "#390a8b",
     },
 
     info: {
