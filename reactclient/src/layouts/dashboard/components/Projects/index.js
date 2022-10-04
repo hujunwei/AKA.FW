@@ -108,9 +108,9 @@ function Projects() {
         </MDBox>
         <MDBox color="text" px={2}>
           {loading && <MDSpinner aria-label="Loading..." />}
-        </MDBox> 
+          {loadOfficialUrlsError && renderAlert()}
+        </MDBox>
       </MDBox> 
-      {loadOfficialUrlsError && renderAlert()}
       <MDBox display="flex" alignItems="center">
         <DataTable
           table={{ columns, rows }}

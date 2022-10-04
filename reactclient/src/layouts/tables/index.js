@@ -250,20 +250,20 @@ function Tables() {
                 <MDBox display="flex" justifyContent="space-between" alignItems="center" p={1}>
                   <MDBox>
                     <MDTypography variant="h6" color="white">
-                      Customize your alias
+                      Create or Manage your own alias
                     </MDTypography>
                   </MDBox>
                   <MDBox>
                     {loading && <MDSpinner aria-label="Loading..." />}
-                    {!loading && (
+                    {!loading && !loadUserUrlsError && (
                       <MDButton variant="gradient" color="success" onClick={handleOpenAdd}>
                         <AddIcon>Add</AddIcon>
                       </MDButton>
                     )}
+                    {loadUserUrlsError && renderAlert()}
                   </MDBox>
                 </MDBox>
               </MDBox>
-              {loadUserUrlsError && renderAlert()}
               <MDBox pt={3}>
                 <DataTable
                   table={{ columns, rows }}
