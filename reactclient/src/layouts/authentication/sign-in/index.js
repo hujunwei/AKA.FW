@@ -93,7 +93,6 @@ function Basic() {
 
   return (
     <BasicLayout image={bgImage}>
-   {/* <BasicLayout image=''> */}
       <Card>
         <MDBox
           variant="gradient"
