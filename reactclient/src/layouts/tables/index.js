@@ -21,7 +21,7 @@ import Card from "@mui/material/Card";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Divider } from "@mui/material";
+import { IconButton, Divider, Tooltip } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -43,6 +43,7 @@ import { Navigate } from "react-router-dom";
 import Constants from "utilities/Constants";
 import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
+import stringTruncate from "utilities/stringTruncate";
 
 import AliasCreationForm from "./forms/aliascreationform";
 import AliasUpdateForm from "./forms/aliasupdateform";
@@ -67,11 +68,11 @@ const style = {
 function Tables() {
   const columns = [
     { Header: "name", accessor: "name", width: "20%", align: "left" },
-    { Header: "alias", accessor: "alias", width: "20%", align: "left" },
-    { Header: "target url", accessor: "targeturl", width: "20%", align: "left" },
-    { Header: "updated on", accessor: "updatedat", width: "20%", align: "left" },
-    { Header: "status", accessor: "isactive", width: "20%", align: "center" },
-    { Header: "actions", accessor: "actions", width: "20%", align: "center" },
+    { Header: "alias", accessor: "alias", width: "10%", align: "left" },
+    { Header: "target url", accessor: "targeturl", width: "40%", align: "left" },
+    { Header: "updated on", accessor: "updatedat", width: "10%", align: "left" },
+    { Header: "status", accessor: "isactive", width: "10%", align: "center" },
+    { Header: "actions", accessor: "actions", width: "10%", align: "center" },
   ];
   const { token } = useToken();
   const [loading, setLoading] = useState(false);
@@ -147,7 +148,7 @@ function Tables() {
     fetch(`${Constants.API_URL_DELETE_MAPPING}/${url.id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(checkResponse)
@@ -170,19 +171,25 @@ function Tables() {
 
   const rows = tableData.map((url) => ({
     name: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.name}
-      </MDTypography>
+      <Tooltip title={url.name} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.name, 25)}
+        </MDTypography>
+      </Tooltip>
     ),
     alias: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.sourceAlias}
-      </MDTypography>
+      <Tooltip title={url.sourceAlias} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.sourceAlias, 20)}
+        </MDTypography>
+      </Tooltip>
     ),
     targeturl: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.targetUrl}
-      </MDTypography>
+      <Tooltip title={url.targetUrl} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.targetUrl, 50)}
+        </MDTypography>
+      </Tooltip>
     ),
     updatedat: (
       <MDTypography variant="caption" color="text" fontWeight="medium">

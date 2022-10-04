@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
+import { Tooltip } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -30,12 +31,13 @@ import DataTable from "examples/Tables/DataTable";
 import Constants from "utilities/Constants";
 import useToken from "utilities/UseToken";
 import useErrorHandler from "utilities/useErrorHandler";
+import stringTruncate from "utilities/stringTruncate";
 
 function Projects() {
   const columns = [
-    { Header: "name", accessor: "name", width: "40%", align: "left" },
+    { Header: "name", accessor: "name", width: "20%", align: "left" },
     { Header: "alias", accessor: "alias", width: "20%", align: "left" },
-    { Header: "target url", accessor: "targeturl", width: "20%", align: "left" },
+    { Header: "target url", accessor: "targeturl", width: "40%", align: "left" },
     { Header: "status", accessor: "isactive", width: "20%", align: "center" },
   ];
   const { token } = useToken();
@@ -75,19 +77,25 @@ function Projects() {
 
   const rows = tableData.map((url) => ({
     name: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.name}
-      </MDTypography>
+      <Tooltip title={url.name} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.name, 40)}
+        </MDTypography>
+      </Tooltip>
     ),
     alias: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.sourceAlias}
-      </MDTypography>
+      <Tooltip title={url.sourceAlias} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.sourceAlias, 40)}
+        </MDTypography>
+      </Tooltip>
     ),
     targeturl: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {url.targetUrl}
-      </MDTypography>
+      <Tooltip title={url.targetUrl} disableInteractive>
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {stringTruncate(url.targetUrl, 70)}
+        </MDTypography>
+      </Tooltip>
     ),
     isactive: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
