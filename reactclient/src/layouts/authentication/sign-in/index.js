@@ -39,7 +39,7 @@ import MDInput from "components/MDInput";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-// import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/background3.png";
 
 import useToken from "utilities/UseToken";
 import Constants from "utilities/Constants";
@@ -92,8 +92,8 @@ function Basic() {
   };
 
   return (
-    // <BasicLayout image={bgImage}>
-    <BasicLayout image=''>
+    <BasicLayout image={bgImage}>
+   {/* <BasicLayout image=''> */}
       <Card>
         <MDBox
           variant="gradient"
@@ -108,7 +108,7 @@ function Basic() {
           isfw={1}
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
+            AKA.FREEWHEEL
           </MDTypography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>

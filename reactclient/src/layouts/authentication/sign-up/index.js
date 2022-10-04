@@ -30,7 +30,7 @@ import MDInput from "components/MDInput";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-// import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import bgImage from "assets/images/background3.png";
 
 import Constants from "utilities/Constants";
 import useErrorHandler from "utilities/useErrorHandler";
@@ -83,8 +83,7 @@ function Cover() {
   };
 
   return (
-    // <BasicLayout image={bgImage}>
-    <BasicLayout image=''>
+    <BasicLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
