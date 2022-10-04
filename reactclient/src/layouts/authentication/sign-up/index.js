@@ -68,7 +68,7 @@ function Cover() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setRegisterError(false);
     setLoading(true);
 
     // We enforce username to be email

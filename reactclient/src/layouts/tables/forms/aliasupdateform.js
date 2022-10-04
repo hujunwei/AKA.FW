@@ -29,6 +29,7 @@ export default function AliasUpdateForm(props) {
     e.preventDefault();
 
     setLoading(true);
+    setUpdateError(false);
 
     const mappingToUpdate = {
         name,

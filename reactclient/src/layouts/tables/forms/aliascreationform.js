@@ -27,6 +27,7 @@ export default function AliasCreationForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setAddError(false);
     setLoading(true);
 
     const mappingToCreate = {

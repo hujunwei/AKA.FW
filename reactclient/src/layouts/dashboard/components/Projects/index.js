@@ -45,6 +45,8 @@ function Projects() {
   const [tableData, setTableData] = useState([]);
 
   async function loadOfficialUrls() {
+    setLoadOfficialUrlsError(false);
+
     return fetch(Constants.API_URL_LIST_OFFCIAL_MAPPINGS, {
       method: "GET",
       headers: {

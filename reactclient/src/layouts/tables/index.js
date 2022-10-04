@@ -90,6 +90,8 @@ function Tables() {
   const handleCloseEdit = () => setOpenEdit(false);
 
   async function loadUserUrls() {
+    setLoadUserUrlsError(false);
+
     return fetch(Constants.API_URL_LIST_USER_MAPPINGS, {
       method: "GET",
       headers: {

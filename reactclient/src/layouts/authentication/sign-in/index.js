@@ -82,7 +82,7 @@ function Basic() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoginError(false);
     setLoading(true);
 
     await loginUser({
