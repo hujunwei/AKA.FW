@@ -121,7 +121,7 @@ function Header() {
         </MDTypography>
 
         <MDTypography variant="body2" fontWeight="regular">
-          <b>Step2</b> Import <a href="www.google.com">Aka_Fw_Redirector_Config.json</a> in the
+          <b>Step2</b> Import <a href="https://wiki.freewheel.tv/display/OB/Aka_Fw_Redirector_Config.json">Aka_Fw_Redirector_Config.json</a> in the
           extension.
           <br />
         </MDTypography>
