@@ -15,32 +15,23 @@ Coded by www.creative-tim.com
 
 import { useState, useEffect } from "react";
 
-// prop-types is a library for typechecking of props.
-import PropTypes from "prop-types";
-
 // @mui material components
 import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Icon from "@mui/material/Icon";
+// import Grid from "@mui/material/Grid";
+import { Divider } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
-import backgroundImage from "assets/images/bg-profile.jpeg";
+import redirectorImage from "assets/images/Redirector2.png";
 
-function Header({ children }) {
+function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
-  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -62,7 +53,8 @@ function Header({ children }) {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
-  const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+  const baseUrl = window.location.origin;
+  const fullUrl = `"${baseUrl}/{your_alias}"`;
 
   return (
     <MDBox position="relative" mb={5}>
@@ -70,14 +62,14 @@ function Header({ children }) {
         display="flex"
         alignItems="center"
         position="relative"
-        minHeight="18.75rem"
+        minHeight="19.6rem"
         borderRadius="xl"
         sx={{
           backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.info.main, 0.6),
-              rgba(gradients.info.state, 0.6)
-            )}, url(${backgroundImage})`,
+              rgba(gradients.info.main, 0.1),
+              rgba(gradients.info.state, 0.2)
+            )}, url(${redirectorImage})`,
           backgroundSize: "cover",
           backgroundPosition: "50%",
           overflow: "hidden",
@@ -92,65 +84,50 @@ function Header({ children }) {
           px: 2,
         }}
       >
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
-          </Grid>
-          <Grid item>
-            <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <MDTypography variant="h5" fontWeight="medium">
-                A chrome extension
-              </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                CEO / Co-Founder
-              </MDTypography>
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab
-                  label="App"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Message"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      email
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Settings"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      settings
-                    </Icon>
-                  }
-                />
-              </Tabs>
-            </AppBar>
-          </Grid>
-        </Grid>
-        {children}
+        <MDTypography variant="h3" color="dark">
+          Extreme alias redirecting experience with Redirector
+        </MDTypography>
+        <MDTypography variant="button" color="text" fontWeight="regular">
+          Just 2 steps to follow
+        </MDTypography>
+        <Divider variant="middle" />
+        <MDTypography variant="body2" fontWeight="regular">
+          Although domain providers have ability to forward domain or create DNS alias record, they
+          usually do not support deep link. Which means anything after your domain is not supported
+          for redirecting. So here comes the Redirector. Without this extension AKA.FREEWHEEL already works perfectly to redirect to custom aliased links
+          by typing {fullUrl} in your browser address bar,
+          but with Redirector, it requires you type even less boilderplate base address like &quot;{baseUrl}&quot;.
+          <br />
+          <br />
+          Redirector is a light-weighted chrome extension that helps you override url typed in
+          browser. It enables you to directly type &quot;aka.fw/your_own_alias&quot; in your browser
+          address bar and deep linking to {fullUrl}. And it supports most of modern browsers like
+          Chrome, Edge, Firefox, etc.
+          <br />
+          <br />     
+        </MDTypography>
+        <MDTypography variant="body1" fontWeight="regular">
+          Instructions:
+          <br />
+          <br />
+        </MDTypography>
+        <MDTypography variant="body2" fontWeight="regular">
+          <b>Step1</b> Add the extension{" "}
+          <a href="https://chrome.google.com/webstore/detail/redirector/ocgpenflpmgnfapjedencafcfakcekcd?hl=en">
+            Redirector
+          </a>
+          .
+          <br />
+        </MDTypography>
+
+        <MDTypography variant="body2" fontWeight="regular">
+          <b>Step2</b> Import <a href="www.google.com">Aka_Fw_Redirector_Config.json</a> in the
+          extension.
+          <br />
+        </MDTypography>
       </Card>
     </MDBox>
   );
 }
-
-// Setting default props for the Header
-Header.defaultProps = {
-  children: "",
-};
-
-// Typechecking props for the Header
-Header.propTypes = {
-  children: PropTypes.node,
-};
 
 export default Header;
