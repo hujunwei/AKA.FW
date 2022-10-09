@@ -1,0 +1,23 @@
+{
+    "createdBy": "Redirector v3.5.3",
+    "createdAt": "2022-10-09T06:23:16.156Z",
+    "redirects": [
+        {
+            "description": "AKA.Freewheel",
+            "exampleUrl": "http://aka.fw/alias",
+            "exampleResult": "https://www.aka-fw.com/alias",
+            "error": null,
+            "includePattern": "http://aka.fw/*",
+            "excludePattern": "",
+            "patternDesc": "Any word after aka.fw redirect to aka-fw.com",
+            "redirectUrl": "https://www.aka-fw.com/$1",
+            "patternType": "W",
+            "processMatches": "noProcessing",
+            "disabled": false,
+            "grouped": false,
+            "appliesTo": [
+                "main_frame"
+            ]
+        }
+    ]
+}
