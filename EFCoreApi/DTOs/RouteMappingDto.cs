@@ -30,8 +30,7 @@ public class RouteMappingDto
 // Format of the fields should be validated in front-end.
 public class RouteMappingDtoValidator : AbstractValidator<RouteMappingDto>
 {
-    // TODO: hacky?
-    private static string[] s_predefinedUrls = { "dashboard", "tools", "authentication", "myurls"};
+    private static string[] s_predefinedUrls = { "official", "tools", "my", "authentication/sign-in", "authentication/sign-up"};
 
     public RouteMappingDtoValidator()
     {
