@@ -92,14 +92,14 @@ function Header() {
         </MDTypography>
         <Divider variant="middle" />
         <MDTypography variant="body2" fontWeight="regular">
-          Although domain providers have ability to forward domain or create DNS alias record, they
-          usually do not support deep link. Which means anything after your domain is not supported
-          for redirecting. So here comes the Redirector. Without this extension AKA.FREEWHEEL already works perfectly to redirect to custom aliased links
-          by typing {fullUrl} in your browser address bar,
-          but with Redirector, it requires you type even less boilderplate base address like &quot;{baseUrl}&quot;.
+          Although domain providers have ability to forward domain, they
+          usually do not support deep linking if they do not support DNS alias record. Which means anything after your domain is not supported
+          for redirecting. So here comes the Redirector. Without it, AKA.FREEWHEEL already works perfectly to redirect to custom aliased links
+          by typing {fullUrl} in your browser address bar.
+          But with Redirector, it requires you type even less boilderplate base address like &quot;{baseUrl}&quot;. And you can also configure any base url you like in your browser.
           <br />
           <br />
-          Redirector is a light-weighted chrome extension that helps you override url typed in
+          Redirector is a light-weighted browser extension that helps you override url typed in
           browser. It enables you to directly type &quot;aka.fw/your_own_alias&quot; in your browser
           address bar and deep linking to {fullUrl}. And it supports most of modern browsers like
           Chrome, Edge, Firefox, etc.
@@ -123,6 +123,12 @@ function Header() {
         <MDTypography variant="body2" fontWeight="regular">
           <b>Step2</b> Import <a href="https://wiki.freewheel.tv/display/OB/Aka_Fw_Redirector_Config.json">Aka_Fw_Redirector_Config.json</a> in the
           extension.
+          <br />
+        </MDTypography>
+
+        <MDTypography variant="body2" fontWeight="regular">
+          <br />
+          <b>NOTE:</b> You could also customize your own redirecting base address by editing the config file or in Redirector extension.
           <br />
         </MDTypography>
       </Card>
