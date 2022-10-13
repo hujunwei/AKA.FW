@@ -83,7 +83,7 @@ public class RouteMappingManager : IRouteMappingManager
             mapping.IsOfficial &&
             mapping.SourceAlias.Equals(routeMappingDto.SourceAlias, StringComparison.OrdinalIgnoreCase));
         Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameAliasUrl.Any(), 
-            "Cannot create the short alias link because there is an existing official alias link to the SourceAlias you provided.");
+            "Cannot create the short alias link because there is an existing official alias with the SourceAlias you provided.");
         
         var currentUser = await getCurrentUser();
         var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
@@ -91,11 +91,6 @@ public class RouteMappingManager : IRouteMappingManager
             routeMappingDto.IsOfficial && 
             !currentUserRoles.Any(role => role.Equals("admin", StringComparison.OrdinalIgnoreCase)), 
             "Cannot create official alias link as current sign-in user is not admin.");
-
-        var existMappingsForUser = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
-            (mapping.TargetUrl.Equals(routeMappingDto.TargetUrl, StringComparison.OrdinalIgnoreCase) || mapping.SourceAlias.Equals(routeMappingDto.SourceAlias, StringComparison.OrdinalIgnoreCase)) &&
-            mapping.CreatedBy.Equals(currentUser.Id.ToString(), StringComparison.OrdinalIgnoreCase));
-        Exception<InvalidOperationException>.ThrowOn(() => existMappingsForUser.Any(), "Alias link already exists on your list.");
 
         var RouteMapping = new RouteMapping
         {
@@ -139,7 +134,7 @@ public class RouteMappingManager : IRouteMappingManager
             mapping.IsOfficial &&
             mapping.SourceAlias.Equals(routeMappingDto.SourceAlias, StringComparison.OrdinalIgnoreCase));
         Exception<InvalidOperationException>.ThrowOn(() => existOfficialMappingsWithSameAliasUrl.Any(), 
-            "Cannot update the short alias link because there is an existing official alias link to the SourceAlias you provided.");
+            "Cannot update the short alias link because there is an existing official alias with the SourceAlias you provided.");
 
         var currentUser = await getCurrentUser();
         var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
