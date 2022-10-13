@@ -67,6 +67,11 @@ public class RouteMappingManager : IRouteMappingManager
         var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
             mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
             mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+        
+        var existingMappingsWithSameSourceAlias = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping =>
+            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+        Exception<InvalidOperationException>.ThrowOn(() => existingMappingsWithSameSourceAlias.Any(), 
+            "Cannot create the short alias link because the alias you provided had already been taken.");
 
         var existOfficialMappingsWithSameTargetUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
             mapping.IsOfficial &&
@@ -118,6 +123,11 @@ public class RouteMappingManager : IRouteMappingManager
         var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
             mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
             mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+
+        var existingMappingsWithSameSourceAlias = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping =>
+            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+        Exception<InvalidOperationException>.ThrowOn(() => existingMappingsWithSameSourceAlias.Any(), 
+            "Cannot update the short alias link because the alias you provided had already been taken.");
 
         var existOfficialMappingsWithSameTargetUrl = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping => 
             mapping.IsOfficial &&
@@ -183,21 +193,9 @@ public class RouteMappingManager : IRouteMappingManager
 
     public async Task<RouteMappingDto> FindRouteMappingBySourceAlias(string sourceAlias)
     {
-        var isUserLoggedIn = !string.IsNullOrWhiteSpace(ServiceRuntimeContext.CurrentUserClaims?.Identity?.Name);
-        var currentUser = isUserLoggedIn ? await getCurrentUser() : null;
-
-        // If user logged in, we search both his/her mappings.
-        // Else we just check official mappings.
-        Expression<Func<RouteMapping, bool>> predicate = isUserLoggedIn
-            ? mapping => (mapping.IsOfficial || mapping.CreatedBy == currentUser.Id.ToString()) &&
-                         mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower())
-            : mapping => mapping.IsOfficial && mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower());
+        Expression<Func<RouteMapping, bool>> predicate = mapping => mapping.SourceAlias.ToLower().Equals(sourceAlias.ToLower());
 
         var matchedMappings = await _routeMappingAccessor.List(predicate);
-        var checkingScope = isUserLoggedIn ? "both official and user mappings" : "official mappings only";
-        Exception<EntityNotFoundException>.ThrowOn(
-            () => !matchedMappings.Any(), 
-            $"Cannot find redirecting url by {nameof(sourceAlias)}: {sourceAlias}, checked {checkingScope}.");
 
         return _mapper.Map<RouteMappingDto>(matchedMappings.First());
     }
