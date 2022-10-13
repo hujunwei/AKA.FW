@@ -1,6 +1,7 @@
 using System.Net;
 using System.Security.Authentication;
 using EFCoreApi.Infra.Logging;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Utilities;

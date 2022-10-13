@@ -30,12 +30,13 @@ public class RouteMappingDto
 // Format of the fields should be validated in front-end.
 public class RouteMappingDtoValidator : AbstractValidator<RouteMappingDto>
 {
-    private static string[] s_predefinedUrls = { "official", "tools", "my", "authentication/sign-in", "authentication/sign-up"};
+    // UI reserved URLs.
+    private static readonly string[] s_predefinedUrls = { "official", "tools", "my", "authentication", "authentication/sign-in", "authentication/sign-up" };
 
     public RouteMappingDtoValidator()
     {
         RuleFor(p => p.SourceAlias)
-            .Must(url => !s_predefinedUrls.Any(purl => url.Contains(purl, StringComparison.OrdinalIgnoreCase) && !url.Contains('/')));
+            .Must(sourceAlias => !s_predefinedUrls.Contains(sourceAlias.ToLower()) && !sourceAlias.Contains('/'));
         RuleFor(p => p.TargetUrl).Must(url => !string.IsNullOrWhiteSpace(url));
     }
 }

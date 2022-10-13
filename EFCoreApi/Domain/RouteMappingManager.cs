@@ -60,8 +60,9 @@ public class RouteMappingManager : IRouteMappingManager
 
     public async Task<RouteMappingDto> AddRouteMapping(RouteMappingDto routeMappingDto)
     {
-        await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
-
+        var validationResult = await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
+        Exception<ArgumentException>.ThrowOn(() => !validationResult.IsValid, $"Validation error occurred. Error: {validationResult.Errors.FirstOrDefault()}");
+        
         // TODO: Add index because we are querying by targetUrl & alias
         var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
             mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
@@ -111,7 +112,8 @@ public class RouteMappingManager : IRouteMappingManager
 
     public async Task<RouteMappingDto> UpdateRouteMapping(RouteMappingDto routeMappingDto)
     {
-        await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
+        var validationResult = await _routeMappingDtoValidator.ValidateAsync(routeMappingDto);
+        Exception<ArgumentException>.ThrowOn(() => !validationResult.IsValid, $"Validation error occurred. Error: {validationResult.Errors.FirstOrDefault()}");
         
         var existMappingsWithSameTargetUrlOrAliasUrl = await _routeMappingAccessor.List(mapping =>
             mapping.TargetUrl.ToLower().Equals(routeMappingDto.TargetUrl.ToLower()) ||
