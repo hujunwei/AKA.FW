@@ -76,7 +76,7 @@ function Redirect() {
             </MDTypography>
             <MDTypography variant="caption" color="text">
               Please check your alias is correct. If issue persists, please{" "}
-              <a href="mailto:jwhu@apac.freewheel.com">contact us</a>.
+              <a href="https://freewheel.slack.com/archives/C046CN3DDU2">contact us by Slack</a>.
             </MDTypography>
           </CardContent>
           <CardActions>

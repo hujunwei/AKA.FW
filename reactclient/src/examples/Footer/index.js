@@ -101,7 +101,7 @@ function Footer({ company, links }) {
 Footer.defaultProps = {
   company: { href: "https://wiki.freewheel.tv/", name: "One Strata, Biz-UI @ FREEWHEEL" },
   links: [
-    { href: "mailto:jwhu@apac.freewheel.com", name: "Contact Us" },
+    { href: "https://freewheel.slack.com/archives/C046CN3DDU2", name: "Contact us via Slack" },
   ],
 };
 

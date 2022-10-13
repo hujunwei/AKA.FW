@@ -82,13 +82,13 @@ function Footer({ light }) {
             })}
           >
             <MDBox component="li" pr={2} lineHeight={1}>
-              <Link href="mailto:jwhu@apac.freewheel.com" target="_blank">
+              <Link href="https://freewheel.slack.com/archives/C046CN3DDU2" target="_blank">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Contact Us
+                  Contact us via Slack
                 </MDTypography>
               </Link>
             </MDBox>
