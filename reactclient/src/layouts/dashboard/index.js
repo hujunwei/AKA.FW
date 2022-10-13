@@ -45,11 +45,11 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="weekend"
-                title="Official Links"
-                count={281}
+                title="Official alias"
+                count={30}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
+                  amount: `+1%`,
                   label: "than lask week",
                 }}
               />
@@ -60,11 +60,11 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="info"
                 icon="leaderboard"
-                title="Your Links"
-                count="18"
+                title="My alias"
+                count="10"
                 percentage={{
                   color: "success",
-                  amount: "-3%",
+                  amount: "+2%",
                   label: "than last month",
                 }}
                 style={{backgroundColor: "#390a8b"}}
@@ -80,7 +80,7 @@ function Dashboard() {
                 count="34k"
                 percentage={{
                   color: "success",
-                  amount: "+1%",
+                  amount: `+${Math.floor(Math.random() * 10)}%`,
                   label: "than yesterday",
                 }}
               />
