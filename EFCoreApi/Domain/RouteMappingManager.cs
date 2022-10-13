@@ -55,7 +55,8 @@ public class RouteMappingManager : IRouteMappingManager
     {
         var mappings = await _routeMappingAccessor.List(mapping => mapping.IsOfficial);
 
-        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings);
+        // TODO: Support order by in EntityAccessor instead here.
+        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings.OrderBy(m => m.Name));
     }
 
     public async Task<RouteMappingDto> AddRouteMapping(RouteMappingDto routeMappingDto)
