@@ -103,7 +103,7 @@ function Basic() {
             AKA.FREEWHEEL <br />
           </MDTypography>
           <MDTypography component={Link} to="/authentication/sign-up"variant="caption" fontWeight="small" color="white" mt={1}>
-            We haven&apos;t support LDAP. If you do not have an account with us, please <b>sign up</b> first using your freewheel email account first .
+            We haven&apos;t support LDAP. If you do not have an account with us, please <b>sign up</b> first using your freewheel email account first.
           </MDTypography>
          
         </MDBox>
