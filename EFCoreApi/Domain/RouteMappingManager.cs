@@ -121,7 +121,8 @@ public class RouteMappingManager : IRouteMappingManager
             mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
 
         var existingMappingsWithSameSourceAlias = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping =>
-            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()) &&
+            mapping.Id != routeMappingDto.Id);
         Exception<InvalidOperationException>.ThrowOn(() => existingMappingsWithSameSourceAlias.Any(), 
             "Cannot update the short alias link because the alias you provided had already been taken.");
 
