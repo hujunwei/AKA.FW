@@ -7,6 +7,12 @@ export default function useToken() {
     return userToken?.token;
   };
 
+  const getLoginUserName = () => {
+    const tokenString = localStorage.getItem("token");
+    const userToken = JSON.parse(tokenString);
+    return userToken?.userInfo?.userName;
+  };
+
   const [token, setToken] = useState(getToken());
 
   const saveToken = (userToken) => {
@@ -15,6 +21,7 @@ export default function useToken() {
   };
 
   return {
+    getUserName: getLoginUserName,
     setToken: saveToken,
     token,
   };

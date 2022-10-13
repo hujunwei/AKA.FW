@@ -16,13 +16,13 @@ export default function AliasCreationForm(props) {
   /* eslint-disable react/prop-types */
   const { onAliasCreated } = props;
 
-  const [ name, setName ] = useState(null);
-  const [ alias, setAlias ] = useState(null);
-  const [ targetUrl, setTargetUrl ] = useState(null);
+  const [name, setName] = useState(null);
+  const [alias, setAlias] = useState(null);
+  const [targetUrl, setTargetUrl] = useState(null);
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
-  const [ addError, setAddError ] = useState(false);
-  const [ loading, setLoading ] = useState(false);
-  const { token } = useToken();
+  const [addError, setAddError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { token, getUserName } = useToken();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,12 +31,13 @@ export default function AliasCreationForm(props) {
     setLoading(true);
 
     const mappingToCreate = {
-        name,
-        sourceAlias: alias,
-        targetUrl,
-        isActive: true,
-        isOfficial: false,
-      };
+      name,
+      sourceAlias: alias,
+      targetUrl,
+      isActive: true,
+      // TODO: Hacky for saving time, backend should return user role
+      isOfficial: getUserName() === "akafwadmin@outlook.com"
+    };
 
     fetch(Constants.API_URL_CREARE_MAPPING, {
       method: "POST",
@@ -56,7 +57,7 @@ export default function AliasCreationForm(props) {
 
         setAddError(false);
         setLoading(false);
-         /* eslint-disable react/prop-types */
+        /* eslint-disable react/prop-types */
         onAliasCreated(mappingToCreate);
       });
   };

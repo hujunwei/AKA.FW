@@ -16,14 +16,14 @@ export default function AliasUpdateForm(props) {
   /* eslint-disable react/prop-types */
   const { editingUrl, onAliasUpdated } = props;
 
-  const [ name, setName ] = useState(editingUrl.name);
-  const [ alias, setAlias ] = useState(editingUrl.sourceAlias);
-  const [ targetUrl, setTargetUrl ] = useState(editingUrl.targetUrl);
+  const [name, setName] = useState(editingUrl.name);
+  const [alias, setAlias] = useState(editingUrl.sourceAlias);
+  const [targetUrl, setTargetUrl] = useState(editingUrl.targetUrl);
 
   const { renderAlert, checkAndConvertResponse } = useErrorHandler();
-  const [ updateError, setUpdateError ] = useState(false);
-  const [ loading, setLoading ] = useState(false);
-  const { token } = useToken();
+  const [updateError, setUpdateError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { token, getUserName } = useToken();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,12 +32,13 @@ export default function AliasUpdateForm(props) {
     setUpdateError(false);
 
     const mappingToUpdate = {
-        name,
-        sourceAlias: alias,
-        targetUrl,
-        isActive: true,
-        isOfficial: false,
-      };
+      name,
+      sourceAlias: alias,
+      targetUrl,
+      isActive: true,
+      // TODO: Hacky for saving time, backend should return user role
+      isOfficial: getUserName() === "akafwadmin@outlook.com"
+    };
 
     fetch(`${Constants.API_URL_UPDATE_MAPPING}/${editingUrl.id}`, {
       method: "PATCH",
@@ -57,7 +58,7 @@ export default function AliasUpdateForm(props) {
 
         setUpdateError(false);
         setLoading(false);
-         /* eslint-disable react/prop-types */
+        /* eslint-disable react/prop-types */
         onAliasUpdated(mappingToUpdate);
       });
   };
