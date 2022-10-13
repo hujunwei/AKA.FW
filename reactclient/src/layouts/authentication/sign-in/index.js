@@ -164,7 +164,13 @@ function Basic() {
                 loading={loading}
                 variant="contained"
                 fullWidth
-                style={{color: 'white', backgroundColor: '#390a8b'}}
+                sx={{ 
+                  color: '#fff',
+                  backgroundColor: '#390a8b',
+                  '&:hover': {
+                    backgroundColor:'#390a8b',
+                    opacity: 0.8
+                  }}}
               >
                 sign in
               </LoadingButton>
