@@ -137,7 +137,13 @@ function Cover() {
                 type="submit"
                 loading={loading}
                 variant="contained"
-                style={{color: 'white', backgroundColor: '#390a8b'}}
+                sx={{ 
+                  color: '#fff',
+                  backgroundColor: '#390a8b',
+                  '&:hover': {
+                    backgroundColor:'#390a8b',
+                    opacity: 0.8
+                  }}}
                 fullWidth
               >
                 register
