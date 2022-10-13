@@ -119,6 +119,7 @@ export default function AliasUpdateForm(props) {
               loading={loading}
               loadingPosition="start"
               variant="contained"
+              onClick={() => onAliasUpdated(null)}
             >
               Update
             </LoadingButton>
