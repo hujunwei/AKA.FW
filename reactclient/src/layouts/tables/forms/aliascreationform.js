@@ -115,6 +115,7 @@ export default function AliasCreationForm(props) {
               loading={loading}
               loadingPosition="start"
               variant="contained"
+              onClick={() => onAliasCreated(null)}
             >
               Add
             </LoadingButton>
