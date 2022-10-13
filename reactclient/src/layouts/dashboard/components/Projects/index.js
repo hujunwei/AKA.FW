@@ -108,6 +108,10 @@ function Projects() {
     ),
   }));
 
+  const baseUrl = window.location.origin;
+  const info = `Simply type '${baseUrl.replace("http://", "").replace("https://", "")}/{alias}' in any browser address bar
+  to redirect to the Target URL. No sign-in/sign-up needed.`
+
   return (
     <Card>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
@@ -115,12 +119,16 @@ function Projects() {
           <MDTypography variant="h6" gutterBottom>
             Official alias links @ FREEWHEEL
           </MDTypography>
+          <MDTypography variant="caption" color="text" fontWeight="small">
+            {info}
+          </MDTypography>
+
         </MDBox>
         <MDBox color="text" px={2}>
           {loading && <MDSpinner aria-label="Loading..." />}
           {loadOfficialUrlsError && renderAlert()}
         </MDBox>
-      </MDBox> 
+      </MDBox>
       <MDBox display="flex" alignItems="center">
         <DataTable
           table={{ columns, rows }}

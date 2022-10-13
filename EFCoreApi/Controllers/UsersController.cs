@@ -4,7 +4,6 @@ using EFIdentityFramework.Model;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using NuGet.Protocol;
 using Utilities;
 

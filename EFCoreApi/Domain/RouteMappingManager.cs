@@ -55,7 +55,8 @@ public class RouteMappingManager : IRouteMappingManager
     {
         var mappings = await _routeMappingAccessor.List(mapping => mapping.IsOfficial);
 
-        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings);
+        // TODO: Support order by in EntityAccessor instead here.
+        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings.OrderBy(m => m.Name));
     }
 
     public async Task<RouteMappingDto> AddRouteMapping(RouteMappingDto routeMappingDto)
@@ -121,7 +122,8 @@ public class RouteMappingManager : IRouteMappingManager
             mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
 
         var existingMappingsWithSameSourceAlias = existMappingsWithSameTargetUrlOrAliasUrl.Where(mapping =>
-            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()));
+            mapping.SourceAlias.ToLower().Equals(routeMappingDto.SourceAlias.ToLower()) &&
+            mapping.Id != routeMappingDto.Id);
         Exception<InvalidOperationException>.ThrowOn(() => existingMappingsWithSameSourceAlias.Any(), 
             "Cannot update the short alias link because the alias you provided had already been taken.");
 
