@@ -47,7 +47,7 @@ public class RouteMappingManager : IRouteMappingManager
         var currentUser = await getCurrentUser();
         var mappings = await _routeMappingAccessor.List(mapping => currentUser.Id.ToString() == mapping.CreatedBy);
 
-        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings);
+        return _mapper.Map<IEnumerable<RouteMappingDto>>(mappings.OrderBy(m => m.Name));
     }
     
     // NOTE: Pagination is taken care of by front-end.
