@@ -9,7 +9,6 @@ namespace EFCoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly RoleManager<Role> _roleManager;

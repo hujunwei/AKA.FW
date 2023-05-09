@@ -10,5 +10,5 @@ public interface IRouteMappingAccessor
     Task<IEnumerable<RouteMapping>> List(Expression<Func<RouteMapping, bool>>? predicate = null, PaginationDescriptor? descriptor = null);
     Task<RouteMapping> Add(RouteMapping RouteMapping);
     Task<RouteMapping> Update(RouteMapping updated);
-    new Task Delete(RouteMapping RouteMapping);
+    Task Delete(RouteMapping RouteMapping);
 }
